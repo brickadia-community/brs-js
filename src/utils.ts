@@ -1,12 +1,15 @@
 import { deflate, inflate } from 'pako';
 import { MAX_INT } from './constants';
 import {
+  BRInventoryEntryPlan,
   BRSBytes,
   Bytes,
+  IntVector,
   UnrealColor,
   UnrealFloat,
   UnrealType,
   Uuid,
+  Vector3d,
   WireGraphVariant,
 } from './types';
 import { uuidParse, uuidStringify } from './uuid';
@@ -474,7 +477,14 @@ export class BitReader {
       case 'Byte':
         return this.bytes(1)[0];
       case 'Rotator':
+      case 'Rotator3d':
         return [this.float(), this.float(), this.float()];
+      case 'Vector3d':
+        return [this.float(), this.float(), this.float()] as Vector3d;
+      case 'IntVector':
+        return [this.integer(), this.integer(), this.integer()] as IntVector;
+      case 'BRInventoryEntryPlan':
+        return this.string() as BRInventoryEntryPlan;
       case 'WireGraphVariant':
         return this.wireGraphVariant();
       case 'WireGraphPrimMathVariant':
@@ -719,21 +729,43 @@ export class BitWriter {
       case 'Color':
         if (!Array.isArray(value) || value.length !== 4) {
           throw new Error(
-            `writing unreal type Array, did not receive Array (${value})`
+            `writing unreal type Color, did not receive Array (${value})`
           );
         }
         this.bytes(bgra(value));
         return;
       case 'Rotator':
+      case 'Rotator3d':
         if (!Array.isArray(value) || value.length !== 3) {
           throw new Error(
-            `writing unreal type Array, did not receive Array (${value})`
+            `writing unreal type Rotator, did not receive Array (${value})`
           );
         }
 
         this.float(value[0]);
         this.float(value[1]);
         this.float(value[2]);
+        return;
+      case 'Vector3d':
+        if (!Array.isArray(value) || value.length !== 3) {
+          throw new Error(
+            `writing unreal type Vector3d, did not receive Array (${value})`
+          );
+        }
+
+        this.float(value[0]);
+        this.float(value[1]);
+        this.float(value[2]);
+        return;
+      case 'IntVector':
+        if (!Array.isArray(value) || value.length !== 3) {
+          throw new Error(
+            `writing unreal type IntVector, did not receive Array (${value})`
+          );
+        }
+        this.integer(value[0]);
+        this.integer(value[1]);
+        this.integer(value[2]);
         return;
       case 'Integer':
         if (typeof value !== 'number') {
@@ -774,6 +806,14 @@ export class BitWriter {
           );
         }
         this.wireGraphVariant(value as WireGraphVariant);
+        return;
+      case 'BRInventoryEntryPlan':
+        if (typeof value !== 'string') {
+          throw new Error(
+            `writing unreal type BRInventoryEntryPlan, did not receive string (${value})`
+          );
+        }
+        this.string(value);
         return;
     }
     throw new Error('Unknown unreal type ' + type);

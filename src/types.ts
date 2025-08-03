@@ -16,6 +16,8 @@ export type UnrealInteger64 = number;
 export type UnrealColor = [number, number, number, number];
 export type UnrealByte = number;
 export type UnrealRotator = [number, number, number];
+export type Vector3d = Vector;
+export type IntVector = Vector;
 export type UnrealString = string;
 export type WireGraphVariant =
   | { number: number }
@@ -23,6 +25,7 @@ export type WireGraphVariant =
   | { bool: boolean }
   | { exec: true }
   | { object: true };
+export type BRInventoryEntryPlan = string;
 export type UnrealType =
   | UnrealClass
   | UnrealObject
@@ -33,7 +36,10 @@ export type UnrealType =
   | UnrealRotator
   | UnrealString
   | WireGraphVariant
-  | UnrealInteger64;
+  | UnrealInteger64
+  | Vector3d
+  | IntVector
+  | BRInventoryEntryPlan;
 
 type UnrealTypeFromString<T> = T extends 'Class'
   ? UnrealClass
@@ -49,8 +55,16 @@ type UnrealTypeFromString<T> = T extends 'Class'
   ? UnrealByte
   : T extends 'Rotator'
   ? UnrealRotator
+  : T extends 'Rotator3d'
+  ? UnrealRotator
+  : T extends 'Vector3d'
+  ? Vector3d
+  : T extends 'IntVector'
+  ? IntVector
   : T extends 'String'
   ? UnrealString
+  : T extends 'BRInventoryEntryPlan'
+  ? BRInventoryEntryPlan
   : T extends 'WireGraphVariant'
   ? WireGraphVariant
   : T extends 'WireGraphPrimMathVariant'
@@ -181,6 +195,725 @@ export type KnownComponents = {
       InnerRadius: 'Float';
       MaxDistance: 'Float';
       bSpatialization: 'Boolean';
+    };
+  };
+  Component_AudioEmitter: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      bEnabled: 'Boolean';
+      AudioDescriptor: 'Object';
+      VolumeMultiplier: 'Float';
+      PitchMultiplier: 'Float';
+      InnerRadius: 'Float';
+      MaxDistance: 'Float';
+      bSpatialization: 'Boolean';
+      FocusAzimuth: 'Float';
+      NonFocusAzimuth: 'Float';
+      NonFocusVolumeAttenuation: 'Float';
+    };
+  };
+  Component_BotSpawn: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      RespawnTime: 'Float';
+      CorpseTimeout: 'Float';
+      GunSkill: 'Float';
+      Agression: 'Float';
+      ReactionTime: 'Float';
+      MovementRandomness: 'Float';
+      Jumpyness: 'Float';
+      MovementAmount: 'Float';
+      AttackMovementAmount: 'Float';
+      AggroRange: 'Float';
+      bCanJump: 'Boolean';
+      bBackVision: 'Boolean';
+      bVisionRaycasting: 'Boolean';
+      bCanTargetPlayers: 'Boolean';
+      bCanTargetBots: 'Boolean';
+      MoveTarget: 'Vector3d';
+      BotWeapon: 'Class';
+    };
+  };
+  Component_CheckPoint: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      bRotatePlayerGravityOnSpawn: 'Boolean';
+    };
+  };
+  Component_Damage: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      Message: 'String';
+      ConsoleTag: 'String';
+    };
+  };
+  Component_GoalPoint: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {};
+  };
+  Component_InputSplitter: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {};
+  };
+  Component_OneShotAudioEmitter: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      AudioDescriptor: 'Object';
+      VolumeMultiplier: 'Float';
+      PitchMultiplier: 'Float';
+      InnerRadius: 'Float';
+      MaxDistance: 'Float';
+      bSpatialization: 'Boolean';
+      bEnableRepeat: 'Boolean';
+      RepeatTime: 'Float';
+      RepeatVariance: 'Float';
+    };
+  };
+  Component_SpawnPoint: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      bRotatePlayerGravityOnSpawn: 'Boolean';
+      bEnable: 'Boolean';
+    };
+  };
+  Component_Target: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      OnTime: 'Float';
+    };
+  };
+  Component_Internal_AnimatedButton: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      PressSound: 'Object';
+      ReleaseSound: 'Object';
+      bAllowNearbyInteraction: 'Boolean';
+      bHiddenInteraction: 'Boolean';
+      PromptCustomLabel: 'String';
+    };
+  };
+  Component_Internal_AnimatedSwitch: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      bEnabled: 'Boolean';
+      InteractSound: 'Object';
+      bAllowNearbyInteraction: 'Boolean';
+      bHiddenInteraction: 'Boolean';
+      PromptCustomLabel: 'String';
+    };
+  };
+  Component_Internal_AttachedZone: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      ZoneStartDistance: 'Integer';
+      ZoneEndDistance: 'Integer';
+      bIsBuildingZone: 'Boolean';
+      bIsLooseZone: 'Boolean';
+      bIsShareZone: 'Boolean';
+    };
+  };
+  Component_Internal_Bearing: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      bLimitAngle: 'Boolean';
+      LimitAngle: 'Float';
+      Damping: 'Float';
+    };
+  };
+  Component_Internal_Joint_Wheel: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      bEnabled: 'Boolean';
+      DriveSpeed: 'Float';
+      DrivePower: 'Float';
+      bSteerEnabled: 'Boolean';
+      Steer: 'Float';
+      SteerLimitDegree: 'Float';
+      SteerPower: 'Float';
+      bSuspensionEnabled: 'Boolean';
+      SuspensionStiffness: 'Float';
+      SuspensionDamping: 'Float';
+      JointDistance: 'Integer';
+      bDriveWhenNotAttachedToEngine: 'Boolean';
+      bCanBrake: 'Boolean';
+      bAllowEngineSteerCorrect: 'Boolean';
+      Damping: 'Float';
+    };
+  };
+  Component_Internal_Motor: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      bEnabled: 'Boolean';
+      Speed: 'Float';
+      Power: 'Float';
+      bLimitAngle: 'Boolean';
+      LimitAngle: 'Float';
+      Damping: 'Float';
+    };
+  };
+  Component_Internal_MotorSlider: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      bEnabled: 'Boolean';
+      Speed: 'Float';
+      Power: 'Float';
+      bPositionsArePercentages: 'Boolean';
+      Damping: 'Float';
+    };
+  };
+  Component_Internal_Rerouter: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {};
+  };
+  Component_Internal_Seat: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      bIsOccupied: 'Boolean';
+      ExitOffset: 'IntVector';
+      bAllowNearbyInteraction: 'Boolean';
+      bHiddenInteraction: 'Boolean';
+      PromptCustomLabel: 'String';
+    };
+  };
+  Component_Internal_Servo: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      bEnabled: 'Boolean';
+      TargetAngle: 'Float';
+      Power: 'Float';
+      ActiveDamping: 'Float';
+      ForceLimit: 'Float';
+      bLimitAngle: 'Boolean';
+      LimitAngle: 'Float';
+      Damping: 'Float';
+    };
+  };
+  Component_Internal_ServoSlider: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      bEnabled: 'Boolean';
+      TargetPosition: 'Float';
+      Power: 'Float';
+      TopSpeed: 'Float';
+      Exponent: 'Float';
+      bPositionsArePercentages: 'Boolean';
+      Damping: 'Float';
+    };
+  };
+  Component_Internal_Slider: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      bPositionsArePercentages: 'Boolean';
+      Damping: 'Float';
+    };
+  };
+  Component_Internal_Socket: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {};
+  };
+  Component_Internal_WeightBrick: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      Mass: 'Float';
+      MassSize: 'IntVector';
+      MassOffset: 'IntVector';
+    };
+  };
+  Component_Internal_WheelEngine: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      bEnabled: 'Boolean';
+      bEnableManualControl: 'Boolean';
+      ManualInput_Drive: 'Float';
+      ManualInput_Steer: 'Float';
+      bManualInput_Brake: 'Boolean';
+      CustomMass: 'Float';
+      CustomMassVerticalOffset: 'Float';
+      DriveInterpSpeed: 'Float';
+      DriveSpeed: 'Float';
+      DriveAcceleratingPowerMultiplier: 'Float';
+      DriveBrakingPowerMultiplier: 'Float';
+      DriveDampingMultiplier: 'Float';
+      SteerPowerMultiplier: 'Float';
+      SteerInterpSpeed: 'Float';
+      SteerLimitDegree: 'Float';
+      CenterOfSteering: 'Float';
+      bTankSteering: 'Boolean';
+      TankSteerSpeedMultiplier: 'Float';
+      WaterDriveForce: 'Float';
+      WaterSteeringForce: 'Float';
+      AudioDescriptor: 'Object';
+    };
+  };
+  Component_WireGraph_PlayAudioAt: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      AudioDescriptor: 'Object';
+      VolumeMultiplier: 'Float';
+      PitchMultiplier: 'Float';
+      InnerRadius: 'Float';
+      MaxDistance: 'Float';
+      bSpatialization: 'Boolean';
+    };
+  };
+  Component_WireGraph_SetInventoryEntry: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      Slot: 'Integer';
+      EntryPlan: 'BRInventoryEntryPlan';
+    };
+  };
+  BrickComponentType_Internal_CharacterZoneEvent_Entered: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {};
+  };
+  BrickComponentType_Internal_CharacterZoneEvent_Left: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {};
+  };
+  BrickComponentType_Internal_ReadBrickGrid: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {};
+  };
+  BrickComponentType_Internal_TeleportDestination: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {};
+  };
+  BrickComponentType_Internal_ZoneEvent_BrickChanged: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {};
+  };
+  BrickComponentType_Internal_ZoneEvent_BrickRemoved: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {};
+  };
+  BrickComponentType_WireGraphPseudo_BufferSeconds: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      SecondsToWait: 'Float';
+      ZeroSecondsToWait: 'Float';
+      CurrentTime: 'Float';
+      Input: 'WireGraphVariant';
+      Output: 'WireGraphVariant';
+      Buffered: 'WireGraphVariant';
+      Queued: 'WireGraphVariant';
+      bHasQueued: 'Boolean';
+    };
+  };
+  BrickComponentType_WireGraphPseudo_BufferTicks: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      TicksToWait: 'Integer';
+      ZeroTicksToWait: 'Integer';
+      CurrentTicks: 'Integer';
+      Input: 'WireGraphVariant';
+      Output: 'WireGraphVariant';
+      Buffered: 'WireGraphVariant';
+      Queued: 'WireGraphVariant';
+      bHasQueued: 'Boolean';
+    };
+  };
+  BrickComponentType_WireGraphPseudo_Var: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      Value: 'WireGraphVariant';
+    };
+  };
+  BrickComponentType_WireGraph_Exec_Branch: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {};
+  };
+  BrickComponentType_WireGraph_Exec_Character_SetTempPermission: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      PermissionTagStr: 'String';
+      bPermissionEnable: 'Boolean';
+    };
+  };
+  BrickComponentType_WireGraph_Exec_Character_ShowHint: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      HintTitle: 'String';
+      HintText: 'String';
+    };
+  };
+  BrickComponentType_WireGraph_Exec_Entity_AddLocationRotation: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      Vector: 'Vector3d';
+      Rotation: 'Rotator3d';
+    };
+  };
+  BrickComponentType_WireGraph_Exec_Entity_AddVelocity: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      Vector: 'Vector3d';
+      Rotation: 'Vector3d';
+    };
+  };
+  BrickComponentType_WireGraph_Exec_Entity_RelativeTeleport: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {};
+  };
+  BrickComponentType_WireGraph_Exec_Entity_SetGravityDirection: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      Rotation: 'Rotator3d';
+    };
+  };
+  BrickComponentType_WireGraph_Exec_Entity_SetLocation: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      Vector: 'Vector3d';
+    };
+  };
+  BrickComponentType_WireGraph_Exec_Entity_SetLocationRotation: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      Vector: 'Vector3d';
+      Rotation: 'Rotator3d';
+    };
+  };
+  BrickComponentType_WireGraph_Exec_Entity_SetRotation: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      Rotation: 'Rotator3d';
+    };
+  };
+  BrickComponentType_WireGraph_Exec_Entity_SetVelocity: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      Vector: 'Vector3d';
+      Rotation: 'Vector3d';
+    };
+  };
+  BrickComponentType_WireGraph_Exec_Entity_Teleport: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {};
+  };
+  BrickComponentType_WireGraph_Exec_Union: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {};
+  };
+  BrickComponentType_WireGraph_Exec_Var_Get: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      Value: 'WireGraphVariant';
+    };
+  };
+  BrickComponentType_WireGraph_Exec_Var_Increment: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      Value: 'WireGraphVariant';
+    };
+  };
+  BrickComponentType_WireGraph_Exec_Var_Set: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      Value: 'WireGraphVariant';
+    };
+  };
+  BrickComponentType_WireGraph_Expr_BitwiseAND: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      InputA: 'Integer64';
+      InputB: 'Integer64';
+    };
+  };
+  BrickComponentType_WireGraph_Expr_BitwiseNAND: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      InputA: 'Integer64';
+      InputB: 'Integer64';
+    };
+  };
+  BrickComponentType_WireGraph_Expr_BitwiseNOR: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      InputA: 'Integer64';
+      InputB: 'Integer64';
+    };
+  };
+  BrickComponentType_WireGraph_Expr_BitwiseNOT: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      Input: 'Integer64';
+    };
+  };
+  BrickComponentType_WireGraph_Expr_BitwiseOR: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      InputA: 'Integer64';
+      InputB: 'Integer64';
+    };
+  };
+  BrickComponentType_WireGraph_Expr_BitwiseShiftLeft: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      InputA: 'Integer64';
+      InputB: 'Integer64';
+    };
+  };
+  BrickComponentType_WireGraph_Expr_BitwiseShiftRight: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      InputA: 'Integer64';
+      InputB: 'Integer64';
+    };
+  };
+  BrickComponentType_WireGraph_Expr_BitwiseXOR: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      InputA: 'Integer64';
+      InputB: 'Integer64';
+    };
+  };
+  BrickComponentType_WireGraph_Expr_Ceil: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      Input: 'Double';
+    };
+  };
+  BrickComponentType_WireGraph_Expr_CompareEqual: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      InputA: 'WireGraphVariant';
+      InputB: 'WireGraphVariant';
+    };
+  };
+  BrickComponentType_WireGraph_Expr_CompareGreater: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      InputA: 'WireGraphPrimMathVariant';
+      InputB: 'WireGraphPrimMathVariant';
+    };
+  };
+  BrickComponentType_WireGraph_Expr_CompareGreaterOrEqual: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      InputA: 'WireGraphPrimMathVariant';
+      InputB: 'WireGraphPrimMathVariant';
+    };
+  };
+  BrickComponentType_WireGraph_Expr_CompareLess: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      InputA: 'WireGraphPrimMathVariant';
+      InputB: 'WireGraphPrimMathVariant';
+    };
+  };
+  BrickComponentType_WireGraph_Expr_CompareLessOrEqual: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      InputA: 'WireGraphPrimMathVariant';
+      InputB: 'WireGraphPrimMathVariant';
+    };
+  };
+  BrickComponentType_WireGraph_Expr_CompareNotEqual: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      InputA: 'WireGraphVariant';
+      InputB: 'WireGraphVariant';
+    };
+  };
+  BrickComponentType_WireGraph_Expr_Floor: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      Input: 'Double';
+    };
+  };
+  BrickComponentType_WireGraph_Expr_LogicalAND: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      bInputA: 'Boolean';
+      bInputB: 'Boolean';
+    };
+  };
+  BrickComponentType_WireGraph_Expr_LogicalNAND: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      bInputA: 'Boolean';
+      bInputB: 'Boolean';
+    };
+  };
+  BrickComponentType_WireGraph_Expr_LogicalNOR: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      bInputA: 'Boolean';
+      bInputB: 'Boolean';
+    };
+  };
+  BrickComponentType_WireGraph_Expr_LogicalNOT: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      bInput: 'Boolean';
+    };
+  };
+  BrickComponentType_WireGraph_Expr_LogicalOR: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      bInputA: 'Boolean';
+      bInputB: 'Boolean';
+    };
+  };
+  BrickComponentType_WireGraph_Expr_LogicalXOR: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      bInputA: 'Boolean';
+      bInputB: 'Boolean';
+    };
+  };
+  BrickComponentType_WireGraph_Expr_MathAdd: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      InputA: 'WireGraphPrimMathVariant';
+      InputB: 'WireGraphPrimMathVariant';
+    };
+  };
+  BrickComponentType_WireGraph_Expr_MathBlend: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      Blend: 'Double';
+      InputA: 'WireGraphPrimMathVariant';
+      InputB: 'WireGraphPrimMathVariant';
+    };
+  };
+  BrickComponentType_WireGraph_Expr_MathDivide: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      InputA: 'WireGraphPrimMathVariant';
+      InputB: 'WireGraphPrimMathVariant';
+    };
+  };
+  BrickComponentType_WireGraph_Expr_MathModulo: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      InputA: 'WireGraphPrimMathVariant';
+      InputB: 'WireGraphPrimMathVariant';
+    };
+  };
+  BrickComponentType_WireGraph_Expr_MathModuloFloored: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      InputA: 'WireGraphPrimMathVariant';
+      InputB: 'WireGraphPrimMathVariant';
+    };
+  };
+  BrickComponentType_WireGraph_Expr_MathMultiply: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      InputA: 'WireGraphPrimMathVariant';
+      InputB: 'WireGraphPrimMathVariant';
+    };
+  };
+  BrickComponentType_WireGraph_Expr_MathSubtract: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      InputA: 'WireGraphPrimMathVariant';
+      InputB: 'WireGraphPrimMathVariant';
+    };
+  };
+  BrickComponentType_WireGraph_Fake_Gamemode_RoundEndEvent: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      RoundNumber: 'Integer';
+    };
+  };
+  BrickComponentType_WireGraph_Fake_Gamemode_RoundStartEvent: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      RoundNumber: 'Integer';
+    };
+  };
+  BrickComponent_WireGraph_Expr_EdgeDetector: {
+    version: 1;
+    brick_indices?: number[];
+    properties: {
+      Input: 'Double';
+      bPulseOnRisingEdge: 'Boolean';
+      bPulseOnFallingEdge: 'Boolean';
     };
   };
 };
