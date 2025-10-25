@@ -4,6 +4,8 @@ Read and write Brickadia save files (.brs)
 
 Currently supports save versions <= 10
 
+`brs-js` also reads `.brz` bundles produced by the Brickadia unstable branch. The reader auto-detects the format, unpacks the archive, reconstructs dynamic grids (including remote wires), and surfaces component metadata so downstream tooling can work with a uniform save object.
+
 **Warning:** __Unreal Engine uses numbers potentially larger than Javascript can handle.__
 
 ## Install
@@ -38,6 +40,7 @@ Unsigned ints, while unlikely, may overflow.
 
 ```javascript
 {
+  format: 'brz' | undefined,
   version: short,
   map: string,
   author: {id: uuid, name: string},
@@ -85,6 +88,12 @@ Unsigned ints, while unlikely, may overflow.
       brick_index: int, // index of the brick in `bricks`
       port: string, // port name
     },
+  }]
+  dynamic_grids?: [{
+    id: int,
+    position: [number, number, number],
+    rotation: [number, number, number, number], // quaternion
+    brick_indices: [int, ...],
   }]
   bricks: [{
     asset_name_index: int,

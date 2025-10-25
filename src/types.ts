@@ -1061,21 +1061,13 @@ export type BrsV14 = Modify<
 >;
 
 // a save read from a file
-export type ReadSaveObject =
-  | BrsV1
-  | BrsV2
-  | BrsV3
-  | BrsV4
-  | BrsV8
-  | BrsV9
-  | BrsV10
-  | BrsV14;
-
 // a brick a user provides
 export interface Brick {
   asset_name_index?: number;
   size: Vector;
   position: Vector;
+  local_position?: Vector;
+  grid_id?: number;
   direction?: Direction;
   rotation?: Rotation;
   collision?: boolean | Partial<Collision>;
@@ -1106,11 +1098,37 @@ export interface WriteSaveObject {
   save_time?: ArrayLike<number>;
   components?: DefinedComponents;
   wires?: Wire[];
+  dynamic_grids?: DynamicGridInfo[];
 }
+
+export interface BrzReadSaveObject extends WriteSaveObject {
+  format: 'brz';
+  brick_count: number;
+}
+
+export type ReadSaveObject =
+  | BrsV1
+  | BrsV2
+  | BrsV3
+  | BrsV4
+  | BrsV8
+  | BrsV9
+  | BrsV10
+  | BrsV14
+  | BrzReadSaveObject;
 
 export interface ReadOptions {
   bricks?: boolean;
   preview?: boolean;
+}
+
+export interface DynamicGridInfo {
+  id: number;
+  position: Vector;
+  rotation: [number, number, number, number];
+  brick_indices: number[];
+  owner_index?: number;
+  persistent_index?: number;
 }
 
 export interface WriteOptions {
