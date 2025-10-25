@@ -9,7 +9,7 @@
     "build": "npx webpack --progress",
     "prepare": "npm run dist",
     "watch": "npx webpack -w --progress",
-    "dist": "NODE_ENV=production npx webpack",
+    "dist": "cross-env NODE_ENV=production npx webpack",
     "test": "npx jest"
   },
   "repository": {
@@ -36,8 +36,10 @@
   "devDependencies": {
     "@babel/core": "^7.14.6",
     "@babel/preset-env": "^7.14.7",
+    "@msgpack/msgpack": "^3.1.2",
     "@types/pako": "^1.0.3",
     "babel-loader": "^8.0.6",
+    "cross-env": "^7.0.3",
     "jest": "^27.0.6",
     "pako": "^1.0.10",
     "prettier": "^2.3.2",

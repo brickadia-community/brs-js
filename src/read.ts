@@ -7,6 +7,7 @@ import readBrsV3 from './read.v3';
 import readBrsV4 from './read.v4';
 import readBrsV8 from './read.v8';
 import readBrsV9 from './read.v9';
+import readBrz from './brz/read';
 import { BRSBytes, ReadOptions, ReadSaveObject } from './types';
 import { read } from './utils';
 
@@ -22,6 +23,13 @@ export default function readBrs(
 
   // default disable preview (a5 only)
   if (typeof options.preview !== 'boolean') options.preview = false;
+
+  const isBrz =
+    rawBytes[0] === 66 && rawBytes[1] === 82 && rawBytes[2] === 90; // 'BRZ'
+
+  if (isBrz) {
+    return readBrz(rawBytes, options);
+  }
 
   // Determine if the first 3 bytes are equal to the Brickadia save magic bytes
   if (
