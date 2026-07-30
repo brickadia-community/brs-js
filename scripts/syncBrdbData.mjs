@@ -29,6 +29,8 @@ const memberRe = new RegExp(String.raw`^${IDENT}$`);
 const propRe = new RegExp(
   String.raw`^(\w+)\s*:\s*(\w+)\s*(\[\s*(flat)?\s*\])?$`
 );
+// Map property: `Field: {KeyType: ValueType}`.
+const mapRe = new RegExp(String.raw`^(\w+)\s*:\s*\{\s*(\w+)\s*:\s*(\w+)\s*\}$`);
 
 const stripComments = text =>
   text
@@ -46,7 +48,10 @@ const parseIntLiteral = raw => {
 function parseSchema(text, file) {
   const src = stripComments(text);
   const out = { enums: {}, variants: {}, structs: {} };
-  const declRe = /\b(enum|variant|struct)\s+([A-Za-z0-9_]+)\s*\{([^{}]*)\}/g;
+  // Struct bodies may hold one level of nested braces for map property types
+  // (`Field: {KeyType: ValueType}`), so the body isn't purely brace-free.
+  const declRe =
+    /\b(enum|variant|struct)\s+([A-Za-z0-9_]+)\s*\{((?:[^{}]|\{[^{}]*\})*)\}/g;
   let lastEnd = 0;
   let match;
   while ((match = declRe.exec(src))) {
@@ -74,6 +79,12 @@ function parseSchema(text, file) {
     } else {
       const props = {};
       for (const item of items) {
+        const mapM = mapRe.exec(item);
+        if (mapM) {
+          // compact map source form: single-entry { KeyType: ValueType }
+          props[mapM[1]] = { [mapM[2]]: mapM[3] };
+          continue;
+        }
         const m = propRe.exec(item);
         if (!m)
           throw new Error(`${file}: bad struct prop '${item}' in ${name}`);
@@ -278,7 +289,7 @@ if (Object.keys(componentPorts).length < 200)
 // COMPONENTS.PlayAudioAt.NAME / .BRICK / .PORTS.Exec
 // Keys keep the catalog's own casing (PlayAudioAt), minus the type-system
 // prefixes; port keys are the port names verbatim.
-const componentKey = cls =>
+const shortKey = cls =>
   cls
     .replace(/^BrickComponentType_/, '')
     .replace(/^BrickComponent_/, '')
@@ -286,6 +297,20 @@ const componentKey = cls =>
     .replace(/^WireGraphPseudo_/, '')
     .replace(/^WireGraph_/, '')
     .replace(/^Internal_/, '');
+// Some builds ship a public + an Internal_ variant that strip to the same
+// short key (e.g. AerodynamicSurface). Keep the Internal_ qualifier on the
+// internal one so the public component keeps the clean key.
+const shortKeyCounts = {};
+for (const c of inventory.components) {
+  const k = shortKey(c.class);
+  shortKeyCounts[k] = (shortKeyCounts[k] || 0) + 1;
+}
+const componentKey = cls => {
+  const short = shortKey(cls);
+  return shortKeyCounts[short] > 1 && /(?:^|_)Internal_/.test(cls)
+    ? `Internal_${short}`
+    : short;
+};
 const componentsConst = {};
 for (const c of inventory.components) {
   const key = componentKey(c.class);
@@ -399,6 +424,11 @@ const tsPropOf = src => {
   if (Array.isArray(src)) {
     const el = tsTypeOf(src[0]);
     return el.includes('|') ? `(${el})[]` : `${el}[]`;
+  }
+  // map source form { KeyType: ValueType } -> ordered { $map: [key, value][] }
+  if (src && typeof src === 'object') {
+    const [k, v] = Object.entries(src)[0];
+    return `{ $map: [${tsTypeOf(k)}, ${tsTypeOf(v)}][] }`;
   }
   return tsTypeOf(src);
 };

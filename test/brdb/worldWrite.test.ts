@@ -446,6 +446,8 @@ describe('brdb components and wires (write -> read round-trip)', () => {
       Color: { B: 255, G: 255, R: 255, A: 255 },
       bUseBrickColor: true,
       bCastShadows: false,
+      // ray-tracing visibility on lights (enum, default 0)
+      RayTracingVisibility: 0,
     };
     expect(components[0].data).toEqual({
       ...defaultFilledPointLight,

@@ -336,7 +336,12 @@ export class BrdbSchema {
     if (struct) {
       const obj: { [k: string]: BrdbValue } = {};
       for (const [field, prop] of struct)
-        obj[field] = prop.kind === 'type' ? this.zeroValue(prop.type) : [];
+        obj[field] =
+          prop.kind === 'type'
+            ? this.zeroValue(prop.type)
+            : prop.kind === 'map'
+            ? { $map: [] }
+            : [];
       return obj;
     }
     throw new Error(`brdb: unknown type ${ty}`);
@@ -365,6 +370,8 @@ export class BrdbSchema {
           ? given
           : prop.kind === 'type'
           ? this.zeroValue(prop.type)
+          : prop.kind === 'map'
+          ? { $map: [] }
           : [];
     }
     return out;
@@ -587,10 +594,22 @@ export class BrdbSchema {
         for (const item of arr) this.writeFlat(w, prop.type, item, ctx);
         return;
       }
-      case 'map':
-        // No shipped schema uses Map properties, and the format's reference
-        // reader/writer disagree on the wire form (BRDB.md §4.4 item 10).
-        throw new Error(`brdb: Map properties are unsupported (${ctx})`);
+      case 'map': {
+        // Inverse of readProperty's map case: a msgpack map header (the count)
+        // then schema-typed key/value pairs, in stored order. This matches the
+        // game (and the crate's writer); the crate's read_uint reader is the
+        // side that disagrees (BRDB.md §4.4 item 10).
+        const entries = (value as { $map?: BrdbValue[] })?.$map;
+        if (!Array.isArray(entries))
+          throw new Error(`brdb: expected a { $map } value at ${ctx}`);
+        mpMapHeader(w, entries.length);
+        for (const entry of entries) {
+          const [key, val] = entry as BrdbValue[];
+          this.writeValue(w, prop.key, key);
+          this.writeValue(w, prop.value, val);
+        }
+        return;
+      }
     }
   }
 
@@ -759,8 +778,20 @@ export class BrdbSchema {
           out.push(this.readFlat(r, prop.type, ctx));
         return out;
       }
-      case 'map':
-        throw new Error(`brdb: Map properties are unsupported (${ctx})`);
+      case 'map': {
+        // Wire form: a msgpack map header (the count) followed by that many
+        // schema-typed key/value pairs. Kept as an ordered [key, value] entry
+        // list under { $map } so complex (struct/enum) keys and insertion
+        // order survive decode -> encode.
+        const len = rdMapLen(r);
+        const entries: BrdbValue[] = [];
+        for (let i = 0; i < len; i++) {
+          const key = this.readValue(r, prop.key, depth + 1);
+          const val = this.readValue(r, prop.value, depth + 1);
+          entries.push([key, val]);
+        }
+        return { $map: entries };
+      }
     }
   }
 

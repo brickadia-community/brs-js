@@ -55,7 +55,9 @@ for (const gridId of reader.gridIds()) {
     if (ref.numComponents > 0)
       for (const c of reader.componentChunk(gridId, ref.index).components) {
         const asset = assets[chunkBricks[i][c.brickIndex]?.asset_name_index];
-        if (asset) entry(c.typeName).bricks.add(asset);
+        // B_1x1F_Round is the standalone phase's throwaway host brick, never a real
+        // component host — skip it so brickless components don't list it as a host.
+        if (asset && asset !== "B_1x1F_Round") entry(c.typeName).bricks.add(asset);
       }
     if (ref.numWires > 0) {
       const wires = reader.wireChunk(gridId, ref.index);

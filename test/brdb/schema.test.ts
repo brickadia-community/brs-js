@@ -173,6 +173,36 @@ test('variant values round-trip with tag preserved', () => {
   expect(Array.from(bytes)).toEqual([6, 0xa1, 0x78]);
 });
 
+test('map values round-trip (msgpack map header + typed pairs)', () => {
+  const schema = BrdbSchema.fromText(`
+    struct Holder {
+      M: {i64: f64},
+    }
+  `);
+  // Empty map — the real-world case (MapVar defaults). The game writes a
+  // msgpack map header, so an empty map is FixMap(0) = 0x80.
+  const empty = schema.encode('Holder', { M: { $map: [] } });
+  expect(Array.from(empty)).toEqual([0x80]);
+  expect(schema.decode(empty, 'Holder')).toEqual({ M: { $map: [] } });
+
+  // Non-empty map: FixMap(1) header then schema-typed key/value pairs.
+  const bytes = schema.encode('Holder', { M: { $map: [[5, 1.5]] } });
+  expect(Array.from(bytes)[0]).toBe(0x81);
+  expect(schema.decode(bytes, 'Holder')).toEqual({ M: { $map: [[5, 1.5]] } });
+});
+
+test('a missing map field fills to an empty map, and encodes', () => {
+  const schema = BrdbSchema.fromText(`
+    struct Holder {
+      M: {i64: f64},
+    }
+  `);
+  const filled = schema.fillStruct('Holder', {});
+  expect(filled).toEqual({ M: { $map: [] } });
+  // and the filled default must be encodable (empty map header)
+  expect(Array.from(schema.encode('Holder', filled))).toEqual([0x80]);
+});
+
 test('decode guards against a self-referential struct cycle', () => {
   const schema = BrdbSchema.fromData({
     enums: {},

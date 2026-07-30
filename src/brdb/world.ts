@@ -9,6 +9,7 @@ import type { WriteSaveObject } from '../brs/types';
 import { BitFlags } from './bits';
 import { BrzContainerOptions, Compressor, writeBrzContainer } from './brz';
 import { ByteWriter } from './bytes';
+import { BRICK_HALF_EXTENTS } from './brickSizes';
 import { isProceduralAsset } from './catalog';
 import {
   COMPONENT_STRUCT_DEFAULTS,
@@ -1301,12 +1302,13 @@ function computePrefabJson(
   const max = [0, 0, 0];
   mainBricks.forEach((b, i) => {
     // A brick's local bounds: procedural size, the 1x1 plate footprint for
-    // the collapsed microchip shell, or a 1x1 brick footprint fallback.
-    const half = b.procedural
+    // the collapsed microchip shell, the asset's authored half-extent from the
+    // dump-derived table, or a 1x1 brick footprint fallback.
+    const half: readonly number[] = b.procedural
       ? b.size
       : b.assetName === 'B_1x1_Microchip'
       ? [5, 5, 2]
-      : [5, 5, 6];
+      : (BRICK_HALF_EXTENTS.get(b.assetName) ?? [5, 5, 6]);
     for (let ax = 0; ax < 3; ax++) {
       const lo = b.position[ax] - half[ax];
       const hi = b.position[ax] + half[ax];

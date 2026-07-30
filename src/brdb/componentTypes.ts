@@ -37,6 +37,14 @@ export type BrickComponentData_CheckPoint = {
   bRotatePlayerGravityOnSpawn: boolean;
 };
 
+export type BrickComponentData_Clock = {
+  bEnabled: boolean;
+  bPulseOn: boolean;
+  OnTimeSeconds: number;
+  OffTimeSeconds: number;
+  IntervalSeconds: number;
+};
+
 export type BrickComponentData_Damage = {
   Damage: number;
   RepeatDelay: number;
@@ -53,29 +61,17 @@ export type BrickComponentData_Interact = {
   PromptCustomLabel: string;
 };
 
-export type BrickComponentData_Internal_AttachedZone = {
-  ZoneStartDistance: number;
-  ZoneEndDistance: number;
-  bIsBuildingZone: boolean;
-  bIsLooseZone: boolean;
-  bIsShareZone: boolean;
-  bDetectPlayers: boolean;
-  bDetectPlayers1: boolean;
-  bDetectPlayers2: boolean;
-  bDetectPlayers3: boolean;
-  bDetectEntities: boolean;
-  bDetectProjectiles: boolean;
-  TagFilter: string;
-};
-
 export type BrickComponentData_Internal_CharacterZoneEvent = {
+  TagFilter: string;
   bCollisionEnabled_Player: boolean;
   bCollisionEnabled_Player1: boolean;
   bCollisionEnabled_Player2: boolean;
   bCollisionEnabled_Player3: boolean;
 };
 
-export type BrickComponentData_Internal_EntityZoneEvent = {};
+export type BrickComponentData_Internal_EntityZoneEvent = {
+  TagFilter: string;
+};
 
 export type BrickComponentData_Internal_InputSplitter_V2 = {};
 
@@ -135,11 +131,13 @@ export type BrickComponentData_ProjectileSpawner = {
   Direction: number;
   SpawnLocation: number;
   SpawnMargin: number;
+  SpawnOffsetBias: number;
   bEnabled: boolean;
   NumberOfShots: number;
   SpreadConeAngle: number;
   bSpreadBiasedTowardsCenter: boolean;
   FireRate: number;
+  bEnforceFireRate: boolean;
   DamageMultiplier: number;
   SpeedMultiplier: number;
   ScaleMultiplier: number;
@@ -216,15 +214,6 @@ export type BrickComponentData_Target = {
 };
 
 export type BrickComponentData_TeleportDestination = {};
-
-export type BrickComponentData_Thruster = {
-  bEnabled: boolean;
-  Force: number;
-  Throttle: number;
-  Pitch: number;
-  Yaw: number;
-  bSpawnLight: boolean;
-};
 
 export type BrickComponentData_Touch = {
   BeginTouchSound: number | null;
@@ -319,6 +308,11 @@ export type BrickComponentData_WireGraph_Exec_ArrayVar_Sort = {
   bDescending: boolean;
 };
 
+export type BrickComponentData_WireGraph_Exec_ArrayVar_SortMultiple = {
+  bDescending: boolean;
+  bSuccess: boolean;
+};
+
 export type BrickComponentData_WireGraph_Exec_ArrayVar_Sum = {
   Value: BrdbVariant;
 };
@@ -337,13 +331,47 @@ export type BrickComponentData_WireGraph_Exec_Character_AddInventoryItem = {
   Item: number | null;
 };
 
-export type BrickComponentData_WireGraph_Exec_Character_GetAim = {};
+export type BrickComponentData_WireGraph_Exec_Character_GetAim = {
+  bLocalAim: boolean;
+};
+
+export type BrickComponentData_WireGraph_Exec_Character_GetAmmo = {
+  Resource: number | null;
+};
+
+export type BrickComponentData_WireGraph_Exec_Character_GetCurrentInventorySlot =
+  {};
 
 export type BrickComponentData_WireGraph_Exec_Character_GetDamage = {};
 
 export type BrickComponentData_WireGraph_Exec_Character_GetFromController = {};
 
+export type BrickComponentData_WireGraph_Exec_Character_GetInventoryEntry = {
+  Slot: number;
+};
+
+export type BrickComponentData_WireGraph_Exec_Character_GetWeaponChamberAmmo = {
+  Slot: number;
+  Resource: number | null;
+};
+
+export type BrickComponentData_WireGraph_Exec_Character_GrantAmmo = {
+  Resource: number | null;
+  Amount: number;
+};
+
 export type BrickComponentData_WireGraph_Exec_Character_IncDamage = {
+  Amount: number;
+};
+
+export type BrickComponentData_WireGraph_Exec_Character_IncWeaponChamberAmmo = {
+  Slot: number;
+  Resource: number | null;
+  Amount: number;
+};
+
+export type BrickComponentData_WireGraph_Exec_Character_SetAmmo = {
+  Resource: number | null;
   Amount: number;
 };
 
@@ -366,6 +394,12 @@ export type BrickComponentData_WireGraph_Exec_Character_SetTempPermission = {
   bPermissionEnable: boolean;
 };
 
+export type BrickComponentData_WireGraph_Exec_Character_SetWeaponChamberAmmo = {
+  Slot: number;
+  Resource: number | null;
+  Amount: number;
+};
+
 export type BrickComponentData_WireGraph_Exec_Character_ShowHint = {
   HintTitle: string;
   HintText: string;
@@ -376,50 +410,24 @@ export type BrickComponentData_WireGraph_Exec_ChatCommand = {
   HelpText: string;
 };
 
-export type BrickComponentData_WireGraph_Exec_Controller_GetDisplayName = {};
-
-export type BrickComponentData_WireGraph_Exec_Controller_GetFromEntity = {};
-
-export type BrickComponentData_WireGraph_Exec_Controller_GetUserId = {};
-
-export type BrickComponentData_WireGraph_Exec_Controller_GetUserName = {};
-
-export type BrickComponentData_WireGraph_Exec_Controller_HasPermission = {
-  PermissionName: string;
-};
-
-export type BrickComponentData_WireGraph_Exec_Controller_HasRole = {
-  RoleName: string;
-};
-
-export type BrickComponentData_WireGraph_Exec_Controller_IsTrustedByBrickOwner =
-  {};
-
-export type BrickComponentData_WireGraph_Exec_Controller_SetCanRespawn = {
-  bCanRespawn: boolean;
-};
-
-export type BrickComponentData_WireGraph_Exec_Controller_ShowChatMessage = {
-  Message: string;
-};
-
-export type BrickComponentData_WireGraph_Exec_Controller_ShowMessageBox = {
-  Title: string;
-  Message: string;
-};
-
-export type BrickComponentData_WireGraph_Exec_Controller_ShowStatusMessage = {
-  Message: string;
-};
-
 export type BrickComponentData_WireGraph_Exec_Cycle = {
   Count: number;
   Value: number;
 };
 
+export type BrickComponentData_WireGraph_Exec_Entity_DestroySpawned = {};
+
+export type BrickComponentData_WireGraph_Exec_Entity_DestroySpawnedPrefab = {};
+
+export type BrickComponentData_WireGraph_Exec_Entity_GetSpeed = {};
+
 export type BrickComponentData_WireGraph_Exec_Entity_GetTag = {
   Tag: string;
 };
+
+export type BrickComponentData_WireGraph_Exec_Entity_GetTeam = {};
+
+export type BrickComponentData_WireGraph_Exec_Entity_IsFrozen = {};
 
 export type BrickComponentData_WireGraph_Exec_Entity_PlayAudioAt = {
   AudioDescriptor: number | null;
@@ -437,6 +445,8 @@ export type BrickComponentData_WireGraph_Exec_Entity_SetFrozen = {
 export type BrickComponentData_WireGraph_Exec_Entity_SetTag = {
   Tag: string;
 };
+
+export type BrickComponentData_WireGraph_Exec_Entity_SetTeam = {};
 
 export type BrickComponentData_WireGraph_Exec_Gamemode_BroadcastChatMessage = {
   Message: string;
@@ -494,6 +504,78 @@ export type BrickComponentData_WireGraph_Exec_Gamemode_TeamLeaderboardValue = {
 
 export type BrickComponentData_WireGraph_Exec_Gamemode_TeamWins = {};
 
+export type BrickComponentData_WireGraph_Exec_GetOwnTransform = {};
+
+export type BrickComponentData_WireGraph_Exec_MapVar_ArrayDest = {};
+
+export type BrickComponentData_WireGraph_Exec_MapVar_Base = {};
+
+export type BrickComponentData_WireGraph_Exec_MapVar_CopyFrom = {};
+
+export type BrickComponentData_WireGraph_Exec_MapVar_Get = {
+  bFound: boolean;
+  Key: BrdbVariant;
+  Value: BrdbVariant;
+};
+
+export type BrickComponentData_WireGraph_Exec_MapVar_GetLength = {
+  Length: number;
+};
+
+export type BrickComponentData_WireGraph_Exec_MapVar_KeyOp = {
+  Key: BrdbVariant;
+  bFound: boolean;
+};
+
+export type BrickComponentData_WireGraph_Exec_MapVar_Set = {
+  Key: BrdbVariant;
+  Value: BrdbVariant;
+};
+
+export type BrickComponentData_WireGraph_Exec_PlayClientAudio = {
+  AudioDescriptor: number | null;
+  VolumeMultiplier: number;
+  PitchMultiplier: number;
+};
+
+export type BrickComponentData_WireGraph_Exec_PlayerState_ForceRespawn = {};
+
+export type BrickComponentData_WireGraph_Exec_PlayerState_GetDisplayName = {};
+
+export type BrickComponentData_WireGraph_Exec_PlayerState_GetFromEntity = {};
+
+export type BrickComponentData_WireGraph_Exec_PlayerState_GetUserId = {};
+
+export type BrickComponentData_WireGraph_Exec_PlayerState_GetUserName = {};
+
+export type BrickComponentData_WireGraph_Exec_PlayerState_HasPermission = {
+  PermissionName: string;
+};
+
+export type BrickComponentData_WireGraph_Exec_PlayerState_HasRole = {
+  RoleName: string;
+};
+
+export type BrickComponentData_WireGraph_Exec_PlayerState_IsTrustedByBrickOwner =
+  {};
+
+export type BrickComponentData_WireGraph_Exec_PlayerState_SetCanRespawn = {
+  bCanRespawn: boolean;
+};
+
+export type BrickComponentData_WireGraph_Exec_PlayerState_ShowChatMessage = {
+  Message: string;
+};
+
+export type BrickComponentData_WireGraph_Exec_PlayerState_ShowMessageBox = {
+  Title: string;
+  Message: string;
+};
+
+export type BrickComponentData_WireGraph_Exec_PlayerState_ShowStatusMessage = {
+  Message: string;
+};
+
 export type BrickComponentData_WireGraph_Exec_PlayGlobalAudio = {
   AudioDescriptor: number | null;
   VolumeMultiplier: number;
@@ -519,6 +601,14 @@ export type BrickComponentData_WireGraph_Exec_Var_EditOrGet = {
 
 export type BrickComponentData_WireGraph_Exec_Var_Get = {
   Value: BrdbVariant;
+};
+
+export type BrickComponentData_WireGraph_Exec_Zone_GetEntities = {
+  TagFilter: string;
+};
+
+export type BrickComponentData_WireGraph_Exec_Zone_GetPlayers = {
+  TagFilter: string;
 };
 
 export type BrickComponentData_WireGraph_ExecBranch = {
@@ -566,18 +656,34 @@ export type BrickComponentData_WireGraph_Expr_EdgeDetectorExec = {
   Input: number;
 };
 
+export type BrickComponentData_WireGraph_Expr_EnumToInteger = {
+  Input: BrdbVariant;
+  Output: BrdbVariant;
+};
+
 export type BrickComponentData_WireGraph_Expr_Float_Float = {
   Input: number;
 };
 
+export type BrickComponentData_WireGraph_Expr_Gamemode_TeamPredicate = {};
+
 export type BrickComponentData_WireGraph_Expr_Int_Int = {
   Input: number;
+};
+
+export type BrickComponentData_WireGraph_Expr_IntegerToEnum = {
+  Input: number;
+  bWrap: boolean;
+  TargetType: BrdbVariant;
+  Output: BrdbVariant;
 };
 
 export type BrickComponentData_WireGraph_Expr_IntInt_Int = {
   InputA: number;
   InputB: number;
 };
+
+export type BrickComponentData_WireGraph_Expr_ItemToPickup = {};
 
 export type BrickComponentData_WireGraph_Expr_MakeColor = {
   R: number;
@@ -674,10 +780,28 @@ export type BrickComponentData_WireGraph_Expr_PrimMathVariantPrimMathVariant_Pri
     InputB: BrdbVariant;
   };
 
+export type BrickComponentData_WireGraph_Expr_Remap = {
+  Value: number;
+  InputMin: number;
+  InputMax: number;
+  OutputMin: number;
+  OutputMax: number;
+  Function: number;
+  Direction: number;
+};
+
 export type BrickComponentData_WireGraph_Expr_Select = {
   bSelectB: boolean;
   InputA: BrdbVariant;
   InputB: BrdbVariant;
+};
+
+export type BrickComponentData_WireGraph_Expr_String_CharacterToCodepoint = {
+  Character: string;
+};
+
+export type BrickComponentData_WireGraph_Expr_String_CodepointToCharacter = {
+  Codepoint: number;
 };
 
 export type BrickComponentData_WireGraph_Expr_String_Concatenate = {
@@ -702,6 +826,7 @@ export type BrickComponentData_WireGraph_Expr_String_Find = {
   Input: string;
   Search: string;
   bCaseSensitive: boolean;
+  Start: number;
 };
 
 export type BrickComponentData_WireGraph_Expr_String_FormatText = {
@@ -732,12 +857,15 @@ export type BrickComponentData_WireGraph_Expr_String_Replace = {
   Search: string;
   Replacement: string;
   bCaseSensitive: boolean;
+  Start: number;
+  MaxReplacements: number;
 };
 
 export type BrickComponentData_WireGraph_Expr_String_Split = {
   Input: string;
   Delimiter: string;
   bCaseSensitive: boolean;
+  Occurrence: number;
 };
 
 export type BrickComponentData_WireGraph_Expr_String_StartsWith = {
@@ -780,7 +908,11 @@ export type BrickComponentData_WireGraph_Fake_CharacterDeathEvent = {};
 
 export type BrickComponentData_WireGraph_Fake_CharacterEvent = {};
 
+export type BrickComponentData_WireGraph_Fake_CharacterFiredWeaponEvent = {};
+
 export type BrickComponentData_WireGraph_Fake_ControllerEvent = {};
+
+export type BrickComponentData_WireGraph_Fake_ControllerTeamEvent = {};
 
 export type BrickComponentData_WireGraph_Fake_RoundEvent = {
   RoundNumber: number;
@@ -793,6 +925,14 @@ export type BrickComponentData_WireGraph_FindPlayer = {
 export type BrickComponentData_WireGraph_FontReference = {
   Asset: number | null;
 };
+
+export type BrickComponentData_WireGraph_FormatDate = {
+  UnixEpoch: number;
+  Format: string;
+  bUseUTC: boolean;
+};
+
+export type BrickComponentData_WireGraph_GetUnixEpoch = {};
 
 export type BrickComponentData_WireGraph_ItemReference = {
   Asset: number | null;
@@ -815,6 +955,10 @@ export type BrickComponentData_WireGraph_ProjectileReference = {
 };
 
 export type BrickComponentData_WireGraph_ServerUptime = {};
+
+export type BrickComponentData_WireGraph_WeaponResourceReference = {
+  Asset: number | null;
+};
 
 export type BrickComponentData_WireGraph_WheelEngineAudioReference = {
   Asset: number | null;
@@ -844,6 +988,35 @@ export type BrickComponentData_WireGraphPseudo_BufferTicks = {
   Buffered: BrdbVariant;
   bHasQueued: boolean;
   bIsOffTimer: boolean;
+};
+
+export type BrickComponentData_WireGraphPseudo_CustomEvent = {
+  EventName: string;
+  bIsObjectEvent: boolean;
+  DataOut1: BrdbVariant;
+  DataOut2: BrdbVariant;
+  DataOut3: BrdbVariant;
+  DataOut4: BrdbVariant;
+  DataOut5: BrdbVariant;
+  DataOut6: BrdbVariant;
+  DataOut7: BrdbVariant;
+  DataOut8: BrdbVariant;
+};
+
+export type BrickComponentData_WireGraphPseudo_MapVar = {
+  Value: BrdbVariant;
+};
+
+export type BrickComponentData_WireGraphPseudo_SendCustomEvent = {
+  EventName: string;
+  DataIn1: BrdbVariant;
+  DataIn2: BrdbVariant;
+  DataIn3: BrdbVariant;
+  DataIn4: BrdbVariant;
+  DataIn5: BrdbVariant;
+  DataIn6: BrdbVariant;
+  DataIn7: BrdbVariant;
+  DataIn8: BrdbVariant;
 };
 
 export type BrickComponentData_WireGraphPseudo_Timer = {
@@ -879,6 +1052,11 @@ export type BRInventoryEntryEntity = {
 };
 
 export type BRInventoryEntryNothing = {};
+
+export type BRInventoryEntryWeaponResourceAmounts = {
+  Loaded: number;
+  Reserve: number;
+};
 
 export type BRQueueSecondsEntry = {
   Data: BrdbVariant[];
@@ -947,6 +1125,11 @@ export type Vector = {
   Z: number;
 };
 
+export type Vector2D = {
+  X: number;
+  Y: number;
+};
+
 export type Vector2f = {
   X: number;
   Y: number;
@@ -993,11 +1176,23 @@ export type WireGraphEnumArray_EBREasingFunction = {
   Values: number[];
 };
 
+export type WireGraphEnumArray_EBrickAerodynamicForceApplication = {
+  Values: number[];
+};
+
+export type WireGraphEnumArray_EBrickAerodynamicSurfaceRole = {
+  Values: number[];
+};
+
 export type WireGraphEnumArray_EBrickAxis = {
   Values: number[];
 };
 
 export type WireGraphEnumArray_EBrickDirection = {
+  Values: number[];
+};
+
+export type WireGraphEnumArray_EBrickLightRayTracingVisibility = {
   Values: number[];
 };
 
@@ -1009,7 +1204,39 @@ export type WireGraphEnumArray_EBrickRigidJointInterpMode = {
   Values: number[];
 };
 
+export type WireGraphEnumArray_EBrickSeatAirStrafeControl = {
+  Values: number[];
+};
+
+export type WireGraphEnumArray_EBrickSeatCameraOrigin = {
+  Values: number[];
+};
+
+export type WireGraphEnumArray_EBrickSeatFlightInvertOverride = {
+  Values: number[];
+};
+
+export type WireGraphEnumArray_EBrickSeatMode = {
+  Values: number[];
+};
+
+export type WireGraphEnumArray_EBrickThrusterForceApplication = {
+  Values: number[];
+};
+
+export type WireGraphEnumArray_EBrickVehicleFlightHandling = {
+  Values: number[];
+};
+
+export type WireGraphEnumArray_EBrickVehicleMassDistribution = {
+  Values: number[];
+};
+
 export type WireGraphEnumArray_EBRPawnCollisionChannel = {
+  Values: number[];
+};
+
+export type WireGraphEnumArray_EBRSweepCollisionChannel = {
   Values: number[];
 };
 
@@ -1041,6 +1268,18 @@ export type WireGraphEnumArrayWrapper = {
   Enum: BrdbVariant;
 };
 
+export type WireGraphEnumMapWrapper_FWeakObjectPtr = {
+  Enum: BrdbVariant;
+};
+
+export type WireGraphEnumMapWrapper_FWireGraphString = {
+  Enum: BrdbVariant;
+};
+
+export type WireGraphEnumMapWrapper_int64 = {
+  Enum: BrdbVariant;
+};
+
 export type WireGraphEnumWrapper = {
   Enum: BrdbVariant;
 };
@@ -1051,12 +1290,373 @@ export type WireGraphInt64Array = {
   Values: number[];
 };
 
+export type WireGraphMap_FWeakObjectPtr_bool = {};
+
+export type WireGraphMap_FWeakObjectPtr_double = {};
+
+export type WireGraphMap_FWeakObjectPtr_EBRColorSpace = {};
+
+export type WireGraphMap_FWeakObjectPtr_EBRDisplayTextEasing = {};
+
+export type WireGraphMap_FWeakObjectPtr_EBRDisplayTextJustification = {};
+
+export type WireGraphMap_FWeakObjectPtr_EBREasingDirection = {};
+
+export type WireGraphMap_FWeakObjectPtr_EBREasingFunction = {};
+
+export type WireGraphMap_FWeakObjectPtr_EBrickAerodynamicForceApplication = {};
+
+export type WireGraphMap_FWeakObjectPtr_EBrickAerodynamicSurfaceRole = {};
+
+export type WireGraphMap_FWeakObjectPtr_EBrickAxis = {};
+
+export type WireGraphMap_FWeakObjectPtr_EBrickDirection = {};
+
+export type WireGraphMap_FWeakObjectPtr_EBrickLightRayTracingVisibility = {};
+
+export type WireGraphMap_FWeakObjectPtr_EBrickMaterial = {};
+
+export type WireGraphMap_FWeakObjectPtr_EBrickRigidJointInterpMode = {};
+
+export type WireGraphMap_FWeakObjectPtr_EBrickSeatAirStrafeControl = {};
+
+export type WireGraphMap_FWeakObjectPtr_EBrickSeatCameraOrigin = {};
+
+export type WireGraphMap_FWeakObjectPtr_EBrickSeatFlightInvertOverride = {};
+
+export type WireGraphMap_FWeakObjectPtr_EBrickSeatMode = {};
+
+export type WireGraphMap_FWeakObjectPtr_EBrickThrusterForceApplication = {};
+
+export type WireGraphMap_FWeakObjectPtr_EBrickVehicleFlightHandling = {};
+
+export type WireGraphMap_FWeakObjectPtr_EBrickVehicleMassDistribution = {};
+
+export type WireGraphMap_FWeakObjectPtr_EBRPawnCollisionChannel = {};
+
+export type WireGraphMap_FWeakObjectPtr_EBRSweepCollisionChannel = {};
+
+export type WireGraphMap_FWeakObjectPtr_EBRTextFacing = {};
+
+export type WireGraphMap_FWeakObjectPtr_EBRTextMaterial = {};
+
+export type WireGraphMap_FWeakObjectPtr_EBRTextOutline = {};
+
+export type WireGraphMap_FWeakObjectPtr_EBRTextShading = {};
+
+export type WireGraphMap_FWeakObjectPtr_EBRTextTypeface = {};
+
+export type WireGraphMap_FWeakObjectPtr_EProjectileSpawnLocation = {};
+
+export type WireGraphMap_FWeakObjectPtr_FWeakObjectPtr = {};
+
+export type WireGraphMap_FWeakObjectPtr_FWireGraphString = {};
+
+export type WireGraphMap_FWeakObjectPtr_int64 = {};
+
+export type WireGraphMap_FWireGraphString_bool = {
+  Values: { $map: [string, boolean][] };
+};
+
+export type WireGraphMap_FWireGraphString_double = {
+  Values: { $map: [string, number][] };
+};
+
+export type WireGraphMap_FWireGraphString_EBRColorSpace = {
+  Values: { $map: [string, number][] };
+};
+
+export type WireGraphMap_FWireGraphString_EBRDisplayTextEasing = {
+  Values: { $map: [string, number][] };
+};
+
+export type WireGraphMap_FWireGraphString_EBRDisplayTextJustification = {
+  Values: { $map: [string, number][] };
+};
+
+export type WireGraphMap_FWireGraphString_EBREasingDirection = {
+  Values: { $map: [string, number][] };
+};
+
+export type WireGraphMap_FWireGraphString_EBREasingFunction = {
+  Values: { $map: [string, number][] };
+};
+
+export type WireGraphMap_FWireGraphString_EBrickAerodynamicForceApplication = {
+  Values: { $map: [string, number][] };
+};
+
+export type WireGraphMap_FWireGraphString_EBrickAerodynamicSurfaceRole = {
+  Values: { $map: [string, number][] };
+};
+
+export type WireGraphMap_FWireGraphString_EBrickAxis = {
+  Values: { $map: [string, number][] };
+};
+
+export type WireGraphMap_FWireGraphString_EBrickDirection = {
+  Values: { $map: [string, number][] };
+};
+
+export type WireGraphMap_FWireGraphString_EBrickLightRayTracingVisibility = {
+  Values: { $map: [string, number][] };
+};
+
+export type WireGraphMap_FWireGraphString_EBrickMaterial = {
+  Values: { $map: [string, number][] };
+};
+
+export type WireGraphMap_FWireGraphString_EBrickRigidJointInterpMode = {
+  Values: { $map: [string, number][] };
+};
+
+export type WireGraphMap_FWireGraphString_EBrickSeatAirStrafeControl = {
+  Values: { $map: [string, number][] };
+};
+
+export type WireGraphMap_FWireGraphString_EBrickSeatCameraOrigin = {
+  Values: { $map: [string, number][] };
+};
+
+export type WireGraphMap_FWireGraphString_EBrickSeatFlightInvertOverride = {
+  Values: { $map: [string, number][] };
+};
+
+export type WireGraphMap_FWireGraphString_EBrickSeatMode = {
+  Values: { $map: [string, number][] };
+};
+
+export type WireGraphMap_FWireGraphString_EBrickThrusterForceApplication = {
+  Values: { $map: [string, number][] };
+};
+
+export type WireGraphMap_FWireGraphString_EBrickVehicleFlightHandling = {
+  Values: { $map: [string, number][] };
+};
+
+export type WireGraphMap_FWireGraphString_EBrickVehicleMassDistribution = {
+  Values: { $map: [string, number][] };
+};
+
+export type WireGraphMap_FWireGraphString_EBRPawnCollisionChannel = {
+  Values: { $map: [string, number][] };
+};
+
+export type WireGraphMap_FWireGraphString_EBRSweepCollisionChannel = {
+  Values: { $map: [string, number][] };
+};
+
+export type WireGraphMap_FWireGraphString_EBRTextFacing = {
+  Values: { $map: [string, number][] };
+};
+
+export type WireGraphMap_FWireGraphString_EBRTextMaterial = {
+  Values: { $map: [string, number][] };
+};
+
+export type WireGraphMap_FWireGraphString_EBRTextOutline = {
+  Values: { $map: [string, number][] };
+};
+
+export type WireGraphMap_FWireGraphString_EBRTextShading = {
+  Values: { $map: [string, number][] };
+};
+
+export type WireGraphMap_FWireGraphString_EBRTextTypeface = {
+  Values: { $map: [string, number][] };
+};
+
+export type WireGraphMap_FWireGraphString_EProjectileSpawnLocation = {
+  Values: { $map: [string, number][] };
+};
+
+export type WireGraphMap_FWireGraphString_FWeakObjectPtr = {
+  Values: { $map: [string, number | null][] };
+};
+
+export type WireGraphMap_FWireGraphString_FWireGraphString = {
+  Values: { $map: [string, string][] };
+};
+
+export type WireGraphMap_FWireGraphString_int64 = {
+  Values: { $map: [string, number][] };
+};
+
+export type WireGraphMap_int64_bool = {
+  Values: { $map: [number, boolean][] };
+};
+
+export type WireGraphMap_int64_double = {
+  Values: { $map: [number, number][] };
+};
+
+export type WireGraphMap_int64_EBRColorSpace = {
+  Values: { $map: [number, number][] };
+};
+
+export type WireGraphMap_int64_EBRDisplayTextEasing = {
+  Values: { $map: [number, number][] };
+};
+
+export type WireGraphMap_int64_EBRDisplayTextJustification = {
+  Values: { $map: [number, number][] };
+};
+
+export type WireGraphMap_int64_EBREasingDirection = {
+  Values: { $map: [number, number][] };
+};
+
+export type WireGraphMap_int64_EBREasingFunction = {
+  Values: { $map: [number, number][] };
+};
+
+export type WireGraphMap_int64_EBrickAerodynamicForceApplication = {
+  Values: { $map: [number, number][] };
+};
+
+export type WireGraphMap_int64_EBrickAerodynamicSurfaceRole = {
+  Values: { $map: [number, number][] };
+};
+
+export type WireGraphMap_int64_EBrickAxis = {
+  Values: { $map: [number, number][] };
+};
+
+export type WireGraphMap_int64_EBrickDirection = {
+  Values: { $map: [number, number][] };
+};
+
+export type WireGraphMap_int64_EBrickLightRayTracingVisibility = {
+  Values: { $map: [number, number][] };
+};
+
+export type WireGraphMap_int64_EBrickMaterial = {
+  Values: { $map: [number, number][] };
+};
+
+export type WireGraphMap_int64_EBrickRigidJointInterpMode = {
+  Values: { $map: [number, number][] };
+};
+
+export type WireGraphMap_int64_EBrickSeatAirStrafeControl = {
+  Values: { $map: [number, number][] };
+};
+
+export type WireGraphMap_int64_EBrickSeatCameraOrigin = {
+  Values: { $map: [number, number][] };
+};
+
+export type WireGraphMap_int64_EBrickSeatFlightInvertOverride = {
+  Values: { $map: [number, number][] };
+};
+
+export type WireGraphMap_int64_EBrickSeatMode = {
+  Values: { $map: [number, number][] };
+};
+
+export type WireGraphMap_int64_EBrickThrusterForceApplication = {
+  Values: { $map: [number, number][] };
+};
+
+export type WireGraphMap_int64_EBrickVehicleFlightHandling = {
+  Values: { $map: [number, number][] };
+};
+
+export type WireGraphMap_int64_EBrickVehicleMassDistribution = {
+  Values: { $map: [number, number][] };
+};
+
+export type WireGraphMap_int64_EBRPawnCollisionChannel = {
+  Values: { $map: [number, number][] };
+};
+
+export type WireGraphMap_int64_EBRSweepCollisionChannel = {
+  Values: { $map: [number, number][] };
+};
+
+export type WireGraphMap_int64_EBRTextFacing = {
+  Values: { $map: [number, number][] };
+};
+
+export type WireGraphMap_int64_EBRTextMaterial = {
+  Values: { $map: [number, number][] };
+};
+
+export type WireGraphMap_int64_EBRTextOutline = {
+  Values: { $map: [number, number][] };
+};
+
+export type WireGraphMap_int64_EBRTextShading = {
+  Values: { $map: [number, number][] };
+};
+
+export type WireGraphMap_int64_EBRTextTypeface = {
+  Values: { $map: [number, number][] };
+};
+
+export type WireGraphMap_int64_EProjectileSpawnLocation = {
+  Values: { $map: [number, number][] };
+};
+
+export type WireGraphMap_int64_FWeakObjectPtr = {
+  Values: { $map: [number, number | null][] };
+};
+
+export type WireGraphMap_int64_FWireGraphString = {
+  Values: { $map: [number, string][] };
+};
+
+export type WireGraphMap_int64_int64 = {
+  Values: { $map: [number, number][] };
+};
+
+export type WireGraphMapKeyWrapper_FWeakObjectPtr = {
+  Map: BrdbVariant;
+};
+
+export type WireGraphMapKeyWrapper_FWireGraphString = {
+  Map: BrdbVariant;
+};
+
+export type WireGraphMapKeyWrapper_int64 = {
+  Map: BrdbVariant;
+};
+
 export type WireGraphObjectArray = {
   Values: (number | null)[];
 };
 
 export type WireGraphStringArray = {
   Values: string[];
+};
+
+export type BrickComponentData_AerodynamicSurface = {
+  bEnabled: boolean;
+  bDiscoverable: boolean;
+  Control_DriveAndSteer: BrickComponentWireControl_DriveAndSteer;
+  Role: number;
+  LiftCoefficient: number;
+  LiftMultiplier: number;
+  ForceApplication: number;
+  DragCoefficient: number;
+  StallAngle: number;
+  MaxDeflection: number;
+  Deflection: number;
+};
+
+export type BrickComponentData_AerodynamicSurface_Directional = {
+  AerodynamicDirection: number;
+  bEnabled: boolean;
+  bDiscoverable: boolean;
+  Control_DriveAndSteer: BrickComponentWireControl_DriveAndSteer;
+  Role: number;
+  LiftCoefficient: number;
+  LiftMultiplier: number;
+  ForceApplication: number;
+  DragCoefficient: number;
+  StallAngle: number;
+  MaxDeflection: number;
+  Deflection: number;
 };
 
 export type BrickComponentData_BrickPropertyChanger = {
@@ -1074,43 +1674,50 @@ export type BrickComponentData_BrickPropertyChanger = {
   Material: number;
 };
 
+export type BrickComponentData_ExplosionSpawner = {
+  ProjectileType: number | null;
+  SpawnOffset: Vector;
+  ScaleMultiplier: number;
+  DamageMultiplier: number;
+};
+
 export type BrickComponentData_Gyroscope = {
   bEnabled: boolean;
+  bDiscoverable: boolean;
   Strength: number;
   Damping: number;
   MaxForce: number;
   TargetAxis: Vector;
+  Control_DriveAndSteer: BrickComponentWireControl_DriveAndSteer;
 };
 
-export type BrickComponentData_ItemSpawn = {
-  PickupClass: number | null;
-  bPickupEnabled: boolean;
-  bPickupRespawnOnMinigameReset: boolean;
-  PickupMinigameResetRespawnDelay: number;
-  bPickupAutoDisableOnPickup: boolean;
-  PickupRespawnTime: number;
-  bRenderTranslucentWhenDisabled: boolean;
-  DamageMultiplier: number;
-  WeaponSpeedMultiplier: number;
-  ItemNameOverride: string;
-  ProjectileOverride: number | null;
-  PickupOffsetDirection: number;
-  PickupOffsetDistance: number;
-  PickupRotation: Rotator3f;
-  PickupScale: number;
-  bOverridePickupColors: boolean;
-  PickupMeshColors: Color[];
-  bPickupAnimationEnabled: boolean;
-  PickupAnimationAxis: number;
-  bPickupAnimationAxisLocal: boolean;
-  PickupSpinSpeed: number;
-  PickupBobSpeed: number;
-  PickupBobHeight: number;
-  PickupAnimationPhase: number;
+export type BrickComponentData_Internal_AttachedZone = {
+  ZoneStartDistance: number;
+  ZoneEndDistance: number;
+  bIsBuildingZone: boolean;
+  bIsLooseZone: boolean;
+  bIsShareZone: boolean;
+  bWater: boolean;
+  WaterScattering: Vector;
+  WaterAbsorption: Vector;
+  WaterFogIntensity: number;
+  WaterFogScatteringColor: LinearColor;
+  WaterFogAmbientColor: LinearColor;
+  WaterFogScatteringScale: number;
+  WaterFogAmbientScale: number;
+  bDetectPlayers: boolean;
+  bDetectPlayers1: boolean;
+  bDetectPlayers2: boolean;
+  bDetectPlayers3: boolean;
+  bDetectEntities: boolean;
+  bDetectProjectiles: boolean;
+  TagFilter: string;
+  ZoneWindForce: number;
 };
 
 export type BrickComponentData_Joint_Wheel = {
   Control_DriveAndSteer: BrickComponentWireControl_DriveAndSteer;
+  bDiscoverable: boolean;
   bEnabled: boolean;
   DriveSpeed: number;
   DrivePower: number;
@@ -1131,6 +1738,8 @@ export type BrickComponentData_Joint_Wheel = {
 
 export type BrickComponentData_Joint_Wheel_Suspension = {
   Control_DriveAndSteer: BrickComponentWireControl_DriveAndSteer;
+  bDiscoverable: boolean;
+  bWheelVisible: boolean;
   bEnabled: boolean;
   DriveSpeed: number;
   DrivePower: number;
@@ -1159,6 +1768,7 @@ export type BrickComponentData_PointLight = {
   Color: Color;
   bUseBrickColor: boolean;
   bCastShadows: boolean;
+  RayTracingVisibility: number;
 };
 
 export type BrickComponentData_PrefabSpawn = {
@@ -1175,6 +1785,18 @@ export type BrickComponentData_Seat_V2 = {
   bIsOccupied: boolean;
   ExitOffset: IntVector;
   bRollCameraInThirdPerson: boolean;
+  CameraOrigin: number;
+  CameraOriginOffset: Vector;
+  bScaleCameraOriginOffsetWithZoom: boolean;
+  ThirdPersonStartingZoom: number;
+  ThirdPersonCameraRotation: Rotator;
+  SeatMode: number;
+  bStickyPlaneThrottle: boolean;
+  bFlyingGroundControls: boolean;
+  AirStrafeControl: number;
+  FlightInvertXOverride: number;
+  FlightInvertYOverride: number;
+  bAllowHeldItems: boolean;
   bAllowNearbyInteraction: boolean;
   bHiddenInteraction: boolean;
   PromptCustomLabel: string;
@@ -1190,6 +1812,7 @@ export type BrickComponentData_SpotLight = {
   Color: Color;
   bUseBrickColor: boolean;
   bCastShadows: boolean;
+  RayTracingVisibility: number;
 };
 
 export type BrickComponentData_TextDisplay = {
@@ -1199,6 +1822,7 @@ export type BrickComponentData_TextDisplay = {
   Skew: number;
   Kerning: number;
   LineHeight: number;
+  WidthScale: number;
   LineOffset: number;
   Anchor: Vector2f;
   Offset: Vector3f;
@@ -1227,6 +1851,18 @@ export type BrickComponentData_TextDisplay = {
   bForeground: boolean;
 };
 
+export type BrickComponentData_Thruster = {
+  bEnabled: boolean;
+  bDiscoverable: boolean;
+  Force: number;
+  ForceApplication: number;
+  Throttle: number;
+  Control_DriveAndSteer: BrickComponentWireControl_DriveAndSteer;
+  Pitch: number;
+  Yaw: number;
+  bSpawnLight: boolean;
+};
+
 export type BrickComponentData_WeightBrick = {
   Mass: number;
   MassSize: IntVector;
@@ -1235,15 +1871,50 @@ export type BrickComponentData_WeightBrick = {
 
 export type BrickComponentData_WheelEngine_V2 = {
   bEnabled: boolean;
+  bDisableInWorldControlDiagnostics: boolean;
   bEnableManualControl: boolean;
+  ManualControlMode: number;
   ManualInput_Drive: number;
   ManualInput_Steer: number;
+  ManualInput_Pitch: number;
+  ManualInput_Roll: number;
   bManualInput_Brake: boolean;
   Control_DriveAndSteer: BrickComponentWireControl_DriveAndSteer;
+  bAutodiscoverWheels: boolean;
+  bAutodiscoverThrusters: boolean;
+  bAutodiscoverGyroscopes: boolean;
+  bAutodiscoverAerodynamicSurfaces: boolean;
   CustomMass: number;
+  MassDistribution: number;
   CustomMassVerticalOffset: number;
   DriveInterpSpeed: number;
   DriveSpeed: number;
+  FlightTopSpeed: number;
+  FlightHandling: number;
+  bEnableAirBraking: boolean;
+  bEnableMassBalancing: boolean;
+  LiftMultiplier: number;
+  bEnableGlideTrim: boolean;
+  GlideTrimStrength: number;
+  GlideTrimTargetSpeedMultiplier: number;
+  bEnableAerodynamicRateDamping: boolean;
+  PhysicalRollDampingResponseTime: number;
+  PhysicalPitchDampingResponseTime: number;
+  PhysicalYawDampingResponseTime: number;
+  ThrustMultiplier: number;
+  KeyboardSteeringRollMix: number;
+  KeyboardSteeringYawMix: number;
+  HorizontalSteeringRollMix: number;
+  HorizontalSteeringYawMix: number;
+  ArcadeRollRate: number;
+  ArcadePitchRate: number;
+  ArcadeYawRate: number;
+  ArcadeResponseTime: number;
+  ArcadeAirGripResponseTime: number;
+  ArcadeMaxLateralAccelerationGs: number;
+  ArcadeAeroAuthorityFadeStartSpeed: number;
+  ArcadeAeroAuthorityFadeEndSpeed: number;
+  MigrationVersion: number;
   DriveAcceleratingPowerMultiplier: number;
   DriveBrakingPowerMultiplier: number;
   DriveDampingMultiplier: number;
@@ -1270,53 +1941,10 @@ export type BrickComponentData_WireGraph_Exec_Character_AddInventoryEntry = {
   Entry: BRInventoryEntryConfig;
 };
 
-export type BrickComponentData_WireGraph_Exec_Character_AddInventoryItemAdv = {
-  ItemType: number | null;
-  DamageMultiplier: number;
-  WeaponSpeedMultiplier: number;
-  ItemScale: number;
-  ItemNameOverride: string;
-  ProjectileOverride: number | null;
-  bOverrideColors: boolean;
-  MeshColors: Color[];
-};
-
 export type BrickComponentData_WireGraph_Exec_Character_SetInventoryBrick = {
   Slot: number;
   BrickAsset: number | null;
   ProceduralSize: Vector;
-};
-
-export type BrickComponentData_WireGraph_Exec_Character_SetInventoryItemAdv = {
-  Slot: number;
-  ItemType: number | null;
-  DamageMultiplier: number;
-  WeaponSpeedMultiplier: number;
-  ItemScale: number;
-  ItemNameOverride: string;
-  ProjectileOverride: number | null;
-  bOverrideColors: boolean;
-  MeshColors: Color[];
-};
-
-export type BrickComponentData_WireGraph_Exec_Controller_DisplayText = {
-  Text: string;
-  AnchorX: number;
-  AnchorY: number;
-  PositionX: number;
-  PositionY: number;
-  Angle: number;
-  ScaleX: number;
-  ScaleY: number;
-  FontSize: number;
-  FontColor: Color;
-  OutlineSize: number;
-  OutlineColor: Color;
-  Justification: number;
-  Transition: number;
-  Easing: number;
-  Lifetime: number;
-  TextId: number;
 };
 
 export type BrickComponentData_WireGraph_Exec_Entity_AddLocationRotation = {
@@ -1353,6 +1981,11 @@ export type BrickComponentData_WireGraph_Exec_Entity_GetRotation = {
 export type BrickComponentData_WireGraph_Exec_Entity_GetVelocity = {
   Vector: Vector;
   Rotation: Vector;
+};
+
+export type BrickComponentData_WireGraph_Exec_Entity_GetVelocityAtPoint = {
+  Point: Vector;
+  LinearVelocity: Vector;
 };
 
 export type BrickComponentData_WireGraph_Exec_Entity_RelativeTeleport = {
@@ -1394,6 +2027,34 @@ export type BrickComponentData_WireGraph_Exec_Entity_Teleport = {
   Destination: BrickComponentWirePortControl_TeleportDestination;
 };
 
+export type BrickComponentData_WireGraph_Exec_PlayerState_DisplayText = {
+  Text: string;
+  Font: number | null;
+  Typeface: number;
+  Anchor: Vector2D;
+  Position: Vector2D;
+  Angle: number;
+  ZOrder: number;
+  Scale: Vector2D;
+  Pivot: Vector2D;
+  FontSize: number;
+  FontColor: LinearColor;
+  LetterSpacing: number;
+  Skew: number;
+  LineHeight: number;
+  OutlineSize: number;
+  OutlineColor: LinearColor;
+  bMiteredOutline: boolean;
+  WrapWidth: number;
+  ShadowOffset: Vector2D;
+  ShadowColor: LinearColor;
+  Justification: number;
+  Transition: number;
+  Easing: number;
+  Lifetime: number;
+  TextId: number;
+};
+
 export type BrickComponentData_WireGraph_Exec_PrefabSpawner = {
   Prefab: string;
   SpawnOffset: Vector;
@@ -1402,6 +2063,21 @@ export type BrickComponentData_WireGraph_Exec_PrefabSpawner = {
   Lifetime: number;
   Limit: number;
   SpawnedEntityIds: number[];
+  SpawnedInstanceIds: number[];
+};
+
+export type BrickComponentData_WireGraph_Exec_SpawnExplosion = {
+  ProjectileType: number | null;
+  SpawnOffset: Vector;
+  ScaleMultiplier: number;
+  DamageMultiplier: number;
+};
+
+export type BrickComponentData_WireGraph_Exec_SpawnExplosionAt = {
+  ProjectileType: number | null;
+  WorldPosition: Vector;
+  ScaleMultiplier: number;
+  DamageMultiplier: number;
 };
 
 export type BrickComponentData_WireGraph_Exec_Sweep = {
@@ -1409,15 +2085,37 @@ export type BrickComponentData_WireGraph_Exec_Sweep = {
   Direction: Vector;
   Distance: number;
   Radius: number;
+  CollisionChannel: number;
   bDetectBricks: boolean;
   bDetectPlayers1: boolean;
   bDetectPlayers2: boolean;
   bDetectPlayers3: boolean;
   bDetectPlayers4: boolean;
+  bOnlyHitPlayerBodyParts: boolean;
   bDetectPhysics: boolean;
   bDetectMap: boolean;
   bRelative: boolean;
   bIgnoreOwningGrid: boolean;
+  HitLocation: Vector;
+  HitNormal: Vector;
+  HitDistance: number;
+};
+
+export type BrickComponentData_WireGraph_Exec_SweepSimple = {
+  Direction: number;
+  Distance: number;
+  Radius: number;
+  CollisionChannel: number;
+  SpreadConeAngle: number;
+  bSpreadBiasedTowardsCenter: boolean;
+  bDetectBricks: boolean;
+  bDetectPlayers1: boolean;
+  bDetectPlayers2: boolean;
+  bDetectPlayers3: boolean;
+  bDetectPlayers4: boolean;
+  bOnlyHitPlayerBodyParts: boolean;
+  bDetectPhysics: boolean;
+  bDetectMap: boolean;
   HitLocation: Vector;
   HitNormal: Vector;
   HitDistance: number;
@@ -1587,15 +2285,9 @@ export type BrickTypeNetWrapper = {
   ProceduralSize: IntVector;
 };
 
-export type BRInventoryEntryItem = {
-  ItemType: number | null;
-  bOverrideColors: boolean;
-  MeshColors: Color[];
-  DamageMultiplier: number;
-  WeaponSpeedMultiplier: number;
-  ItemScale: number;
-  ItemNameOverride: string;
-  ProjectileOverride: number | null;
+export type BRInventoryEntryWeaponAmmoOverride = {
+  bOverrideStartingAmmo: boolean;
+  Resources: BRInventoryEntryWeaponResourceAmounts[];
 };
 
 export type BRPlayerPartCustomizationV3 = {
@@ -1620,6 +2312,46 @@ export type WireGraphLinearColorArray = {
   Values: LinearColor[];
 };
 
+export type WireGraphMap_FWeakObjectPtr_FLinearColor = {};
+
+export type WireGraphMap_FWeakObjectPtr_FQuat = {};
+
+export type WireGraphMap_FWeakObjectPtr_FRotator = {};
+
+export type WireGraphMap_FWeakObjectPtr_FVector = {};
+
+export type WireGraphMap_FWireGraphString_FLinearColor = {
+  Values: { $map: [string, LinearColor][] };
+};
+
+export type WireGraphMap_FWireGraphString_FQuat = {
+  Values: { $map: [string, Quat][] };
+};
+
+export type WireGraphMap_FWireGraphString_FRotator = {
+  Values: { $map: [string, Rotator][] };
+};
+
+export type WireGraphMap_FWireGraphString_FVector = {
+  Values: { $map: [string, Vector][] };
+};
+
+export type WireGraphMap_int64_FLinearColor = {
+  Values: { $map: [number, LinearColor][] };
+};
+
+export type WireGraphMap_int64_FQuat = {
+  Values: { $map: [number, Quat][] };
+};
+
+export type WireGraphMap_int64_FRotator = {
+  Values: { $map: [number, Rotator][] };
+};
+
+export type WireGraphMap_int64_FVector = {
+  Values: { $map: [number, Vector][] };
+};
+
 export type WireGraphQuatArray = {
   Values: Quat[];
 };
@@ -1632,8 +2364,73 @@ export type WireGraphVectorArray = {
   Values: Vector[];
 };
 
+export type BrickComponentData_ItemSpawn = {
+  PickupClass: number | null;
+  bPickupEnabled: boolean;
+  bPickupRespawnOnMinigameReset: boolean;
+  PickupMinigameResetRespawnDelay: number;
+  bPickupAutoDisableOnPickup: boolean;
+  PickupRespawnTime: number;
+  bRenderTranslucentWhenDisabled: boolean;
+  DamageMultiplier: number;
+  WeaponSpeedMultiplier: number;
+  ItemNameOverride: string;
+  ProjectileOverride: number | null;
+  WeaponAmmoOverride: BRInventoryEntryWeaponAmmoOverride;
+  PickupOffsetDirection: number;
+  PickupOffsetDistance: number;
+  PickupRotation: Rotator3f;
+  PickupScale: number;
+  bOverridePickupColors: boolean;
+  PickupMeshColors: Color[];
+  bPickupAnimationEnabled: boolean;
+  PickupAnimationAxis: number;
+  bPickupAnimationAxisLocal: boolean;
+  PickupSpinSpeed: number;
+  PickupBobSpeed: number;
+  PickupBobHeight: number;
+  PickupAnimationPhase: number;
+};
+
+export type BrickComponentData_WireGraph_Exec_Character_AddInventoryItemAdv = {
+  ItemType: number | null;
+  DamageMultiplier: number;
+  WeaponSpeedMultiplier: number;
+  ItemScale: number;
+  ItemNameOverride: string;
+  ProjectileOverride: number | null;
+  WeaponAmmoOverride: BRInventoryEntryWeaponAmmoOverride;
+  bOverrideColors: boolean;
+  MeshColors: Color[];
+};
+
+export type BrickComponentData_WireGraph_Exec_Character_SetInventoryItemAdv = {
+  Slot: number;
+  ItemType: number | null;
+  DamageMultiplier: number;
+  WeaponSpeedMultiplier: number;
+  ItemScale: number;
+  ItemNameOverride: string;
+  ProjectileOverride: number | null;
+  WeaponAmmoOverride: BRInventoryEntryWeaponAmmoOverride;
+  bOverrideColors: boolean;
+  MeshColors: Color[];
+};
+
 export type BRInventoryEntryBrick = {
   BrickType: BrickTypeNetWrapper;
+};
+
+export type BRInventoryEntryItem = {
+  ItemType: number | null;
+  bOverrideColors: boolean;
+  MeshColors: Color[];
+  DamageMultiplier: number;
+  WeaponSpeedMultiplier: number;
+  ItemScale: number;
+  ItemNameOverride: string;
+  ProjectileOverride: number | null;
+  WeaponAmmoOverride: BRInventoryEntryWeaponAmmoOverride;
 };
 
 export type BRInventoryEntryPlan = {
@@ -1690,6 +2487,11 @@ export type BrickComponentData_WireGraph_Exec_Character_SetInventoryEntry = {
 
 /** Component type name -> data struct shape, for editor completion. */
 export type ComponentTypeDataMap = {
+  BrickComponentType_AerodynamicSurface: BrickComponentData_AerodynamicSurface_Directional;
+  BrickComponentType_Clock: BrickComponentData_Clock;
+  BrickComponentType_ExplosionSpawner: BrickComponentData_ExplosionSpawner;
+  BrickComponentType_Internal_AerodynamicSurface: BrickComponentData_AerodynamicSurface;
+  BrickComponentType_Internal_AerodynamicSurfaceVertical: BrickComponentData_AerodynamicSurface;
   BrickComponentType_Internal_CharacterZoneEvent_Entered: BrickComponentData_Internal_CharacterZoneEvent;
   BrickComponentType_Internal_CharacterZoneEvent_Left: BrickComponentData_Internal_CharacterZoneEvent;
   BrickComponentType_Internal_EntityZoneEvent_Entered: BrickComponentData_Internal_EntityZoneEvent;
@@ -1706,9 +2508,14 @@ export type ComponentTypeDataMap = {
   BrickComponentType_WireGraphPseudo_ArrayVar: BrickComponentData_WireGraphPseudo_ArrayVar;
   BrickComponentType_WireGraphPseudo_BufferSeconds: BrickComponentData_WireGraphPseudo_BufferSeconds;
   BrickComponentType_WireGraphPseudo_BufferTicks: BrickComponentData_WireGraphPseudo_BufferTicks;
+  BrickComponentType_WireGraphPseudo_CustomEvent: BrickComponentData_WireGraphPseudo_CustomEvent;
+  BrickComponentType_WireGraphPseudo_CustomEvent_Global: BrickComponentData_WireGraphPseudo_CustomEvent;
   BrickComponentType_WireGraphPseudo_Dampen: BrickComponentData_WireGraphPseudo_Dampen;
+  BrickComponentType_WireGraphPseudo_MapVar: BrickComponentData_WireGraphPseudo_MapVar;
   BrickComponentType_WireGraphPseudo_QueueSeconds: BrickComponentData_WireGraphPseudo_QueueSeconds;
   BrickComponentType_WireGraphPseudo_QueueTicks: BrickComponentData_WireGraphPseudo_QueueTicks;
+  BrickComponentType_WireGraphPseudo_SendCustomEvent: BrickComponentData_WireGraphPseudo_SendCustomEvent;
+  BrickComponentType_WireGraphPseudo_SendCustomEvent_Global: BrickComponentData_WireGraphPseudo_SendCustomEvent;
   BrickComponentType_WireGraphPseudo_Timer: BrickComponentData_WireGraphPseudo_Timer;
   BrickComponentType_WireGraphPseudo_Tween: BrickComponentData_WireGraphPseudo_Tween;
   BrickComponentType_WireGraphPseudo_Var: BrickComponentData_WireGraphPseudo_Var;
@@ -1736,6 +2543,7 @@ export type ComponentTypeDataMap = {
   BrickComponentType_WireGraph_Exec_ArrayVar_Shuffle: BrickComponentData_WireGraph_Exec_ArrayVar_Base;
   BrickComponentType_WireGraph_Exec_ArrayVar_Slice: BrickComponentData_WireGraph_Exec_ArrayVar_Slice;
   BrickComponentType_WireGraph_Exec_ArrayVar_Sort: BrickComponentData_WireGraph_Exec_ArrayVar_Sort;
+  BrickComponentType_WireGraph_Exec_ArrayVar_SortMultiple: BrickComponentData_WireGraph_Exec_ArrayVar_SortMultiple;
   BrickComponentType_WireGraph_Exec_ArrayVar_Sum: BrickComponentData_WireGraph_Exec_ArrayVar_Sum;
   BrickComponentType_WireGraph_Exec_ArrayVar_Swap: BrickComponentData_WireGraph_Exec_ArrayVar_Swap;
   BrickComponentType_WireGraph_Exec_Branch: BrickComponentData_WireGraph_ExecBranch;
@@ -1745,9 +2553,16 @@ export type ComponentTypeDataMap = {
   BrickComponentType_WireGraph_Exec_Character_AddInventoryItem: BrickComponentData_WireGraph_Exec_Character_AddInventoryItem;
   BrickComponentType_WireGraph_Exec_Character_AddInventoryItemAdv: BrickComponentData_WireGraph_Exec_Character_AddInventoryItemAdv;
   BrickComponentType_WireGraph_Exec_Character_GetAim: BrickComponentData_WireGraph_Exec_Character_GetAim;
+  BrickComponentType_WireGraph_Exec_Character_GetAmmo: BrickComponentData_WireGraph_Exec_Character_GetAmmo;
+  BrickComponentType_WireGraph_Exec_Character_GetCurrentInventorySlot: BrickComponentData_WireGraph_Exec_Character_GetCurrentInventorySlot;
   BrickComponentType_WireGraph_Exec_Character_GetDamage: BrickComponentData_WireGraph_Exec_Character_GetDamage;
   BrickComponentType_WireGraph_Exec_Character_GetFromController: BrickComponentData_WireGraph_Exec_Character_GetFromController;
+  BrickComponentType_WireGraph_Exec_Character_GetInventoryEntry: BrickComponentData_WireGraph_Exec_Character_GetInventoryEntry;
+  BrickComponentType_WireGraph_Exec_Character_GetWeaponChamberAmmo: BrickComponentData_WireGraph_Exec_Character_GetWeaponChamberAmmo;
+  BrickComponentType_WireGraph_Exec_Character_GrantAmmo: BrickComponentData_WireGraph_Exec_Character_GrantAmmo;
   BrickComponentType_WireGraph_Exec_Character_IncDamage: BrickComponentData_WireGraph_Exec_Character_IncDamage;
+  BrickComponentType_WireGraph_Exec_Character_IncWeaponChamberAmmo: BrickComponentData_WireGraph_Exec_Character_IncWeaponChamberAmmo;
+  BrickComponentType_WireGraph_Exec_Character_SetAmmo: BrickComponentData_WireGraph_Exec_Character_SetAmmo;
   BrickComponentType_WireGraph_Exec_Character_SetDamage: BrickComponentData_WireGraph_Exec_Character_SetDamage;
   BrickComponentType_WireGraph_Exec_Character_SetInventoryBrick: BrickComponentData_WireGraph_Exec_Character_SetInventoryBrick;
   BrickComponentType_WireGraph_Exec_Character_SetInventoryEntity: BrickComponentData_WireGraph_Exec_Character_SetInventoryEntity;
@@ -1755,30 +2570,25 @@ export type ComponentTypeDataMap = {
   BrickComponentType_WireGraph_Exec_Character_SetInventoryItem: BrickComponentData_WireGraph_Exec_Character_SetInventoryItem;
   BrickComponentType_WireGraph_Exec_Character_SetInventoryItemAdv: BrickComponentData_WireGraph_Exec_Character_SetInventoryItemAdv;
   BrickComponentType_WireGraph_Exec_Character_SetTempPermission: BrickComponentData_WireGraph_Exec_Character_SetTempPermission;
+  BrickComponentType_WireGraph_Exec_Character_SetWeaponChamberAmmo: BrickComponentData_WireGraph_Exec_Character_SetWeaponChamberAmmo;
   BrickComponentType_WireGraph_Exec_Character_ShowHint: BrickComponentData_WireGraph_Exec_Character_ShowHint;
   BrickComponentType_WireGraph_Exec_ChatCommand: BrickComponentData_WireGraph_Exec_ChatCommand;
-  BrickComponentType_WireGraph_Exec_Controller_DisplayText: BrickComponentData_WireGraph_Exec_Controller_DisplayText;
-  BrickComponentType_WireGraph_Exec_Controller_GetDisplayName: BrickComponentData_WireGraph_Exec_Controller_GetDisplayName;
-  BrickComponentType_WireGraph_Exec_Controller_GetFromEntity: BrickComponentData_WireGraph_Exec_Controller_GetFromEntity;
-  BrickComponentType_WireGraph_Exec_Controller_GetUserId: BrickComponentData_WireGraph_Exec_Controller_GetUserId;
-  BrickComponentType_WireGraph_Exec_Controller_GetUserName: BrickComponentData_WireGraph_Exec_Controller_GetUserName;
-  BrickComponentType_WireGraph_Exec_Controller_HasPermission: BrickComponentData_WireGraph_Exec_Controller_HasPermission;
-  BrickComponentType_WireGraph_Exec_Controller_HasRole: BrickComponentData_WireGraph_Exec_Controller_HasRole;
-  BrickComponentType_WireGraph_Exec_Controller_IsTrustedByBrickOwner: BrickComponentData_WireGraph_Exec_Controller_IsTrustedByBrickOwner;
-  BrickComponentType_WireGraph_Exec_Controller_SetCanRespawn: BrickComponentData_WireGraph_Exec_Controller_SetCanRespawn;
-  BrickComponentType_WireGraph_Exec_Controller_ShowChatMessage: BrickComponentData_WireGraph_Exec_Controller_ShowChatMessage;
-  BrickComponentType_WireGraph_Exec_Controller_ShowMessageBox: BrickComponentData_WireGraph_Exec_Controller_ShowMessageBox;
-  BrickComponentType_WireGraph_Exec_Controller_ShowStatusMessage: BrickComponentData_WireGraph_Exec_Controller_ShowStatusMessage;
   BrickComponentType_WireGraph_Exec_Cycle: BrickComponentData_WireGraph_Exec_Cycle;
   BrickComponentType_WireGraph_Exec_Entity_AddLocationRotation: BrickComponentData_WireGraph_Exec_Entity_AddLocationRotation;
   BrickComponentType_WireGraph_Exec_Entity_AddVelocity: BrickComponentData_WireGraph_Exec_Entity_AddVelocity;
+  BrickComponentType_WireGraph_Exec_Entity_DestroySpawned: BrickComponentData_WireGraph_Exec_Entity_DestroySpawned;
+  BrickComponentType_WireGraph_Exec_Entity_DestroySpawnedPrefab: BrickComponentData_WireGraph_Exec_Entity_DestroySpawnedPrefab;
   BrickComponentType_WireGraph_Exec_Entity_GetAngularVelocity: BrickComponentData_WireGraph_Exec_Entity_GetAngularVelocity;
   BrickComponentType_WireGraph_Exec_Entity_GetLinearVelocity: BrickComponentData_WireGraph_Exec_Entity_GetLinearVelocity;
   BrickComponentType_WireGraph_Exec_Entity_GetLocation: BrickComponentData_WireGraph_Exec_Entity_GetLocation;
   BrickComponentType_WireGraph_Exec_Entity_GetLocationRotation: BrickComponentData_WireGraph_Exec_Entity_GetLocationRotation;
   BrickComponentType_WireGraph_Exec_Entity_GetRotation: BrickComponentData_WireGraph_Exec_Entity_GetRotation;
+  BrickComponentType_WireGraph_Exec_Entity_GetSpeed: BrickComponentData_WireGraph_Exec_Entity_GetSpeed;
   BrickComponentType_WireGraph_Exec_Entity_GetTag: BrickComponentData_WireGraph_Exec_Entity_GetTag;
+  BrickComponentType_WireGraph_Exec_Entity_GetTeam: BrickComponentData_WireGraph_Exec_Entity_GetTeam;
   BrickComponentType_WireGraph_Exec_Entity_GetVelocity: BrickComponentData_WireGraph_Exec_Entity_GetVelocity;
+  BrickComponentType_WireGraph_Exec_Entity_GetVelocityAtPoint: BrickComponentData_WireGraph_Exec_Entity_GetVelocityAtPoint;
+  BrickComponentType_WireGraph_Exec_Entity_IsFrozen: BrickComponentData_WireGraph_Exec_Entity_IsFrozen;
   BrickComponentType_WireGraph_Exec_Entity_RelativeTeleport: BrickComponentData_WireGraph_Exec_Entity_RelativeTeleport;
   BrickComponentType_WireGraph_Exec_Entity_SetAngularVelocity: BrickComponentData_WireGraph_Exec_Entity_SetAngularVelocity;
   BrickComponentType_WireGraph_Exec_Entity_SetFrozen: BrickComponentData_WireGraph_Exec_Entity_SetFrozen;
@@ -1788,6 +2598,7 @@ export type ComponentTypeDataMap = {
   BrickComponentType_WireGraph_Exec_Entity_SetLocationRotation: BrickComponentData_WireGraph_Exec_Entity_SetLocationRotation;
   BrickComponentType_WireGraph_Exec_Entity_SetRotation: BrickComponentData_WireGraph_Exec_Entity_SetRotation;
   BrickComponentType_WireGraph_Exec_Entity_SetTag: BrickComponentData_WireGraph_Exec_Entity_SetTag;
+  BrickComponentType_WireGraph_Exec_Entity_SetTeam: BrickComponentData_WireGraph_Exec_Entity_SetTeam;
   BrickComponentType_WireGraph_Exec_Entity_SetVelocity: BrickComponentData_WireGraph_Exec_Entity_SetVelocity;
   BrickComponentType_WireGraph_Exec_Entity_Teleport: BrickComponentData_WireGraph_Exec_Entity_Teleport;
   BrickComponentType_WireGraph_Exec_Gamemode_BroadcastChatMessage: BrickComponentData_WireGraph_Exec_Gamemode_BroadcastChatMessage;
@@ -1808,16 +2619,45 @@ export type ComponentTypeDataMap = {
   BrickComponentType_WireGraph_Exec_Gamemode_SetTeamLeaderboardValue: BrickComponentData_WireGraph_Exec_Gamemode_TeamLeaderboardValue;
   BrickComponentType_WireGraph_Exec_Gamemode_SetTeamPinned: BrickComponentData_WireGraph_Exec_Gamemode_SetTeamPinned;
   BrickComponentType_WireGraph_Exec_Gamemode_TeamWins: BrickComponentData_WireGraph_Exec_Gamemode_TeamWins;
+  BrickComponentType_WireGraph_Exec_GetOwnTransform: BrickComponentData_WireGraph_Exec_GetOwnTransform;
+  BrickComponentType_WireGraph_Exec_MapVar_Clear: BrickComponentData_WireGraph_Exec_MapVar_Base;
+  BrickComponentType_WireGraph_Exec_MapVar_CopyFrom: BrickComponentData_WireGraph_Exec_MapVar_CopyFrom;
+  BrickComponentType_WireGraph_Exec_MapVar_Get: BrickComponentData_WireGraph_Exec_MapVar_Get;
+  BrickComponentType_WireGraph_Exec_MapVar_GetKeys: BrickComponentData_WireGraph_Exec_MapVar_ArrayDest;
+  BrickComponentType_WireGraph_Exec_MapVar_GetLength: BrickComponentData_WireGraph_Exec_MapVar_GetLength;
+  BrickComponentType_WireGraph_Exec_MapVar_GetValues: BrickComponentData_WireGraph_Exec_MapVar_ArrayDest;
+  BrickComponentType_WireGraph_Exec_MapVar_Has: BrickComponentData_WireGraph_Exec_MapVar_KeyOp;
+  BrickComponentType_WireGraph_Exec_MapVar_Remove: BrickComponentData_WireGraph_Exec_MapVar_KeyOp;
+  BrickComponentType_WireGraph_Exec_MapVar_Set: BrickComponentData_WireGraph_Exec_MapVar_Set;
+  BrickComponentType_WireGraph_Exec_PlayClientAudio: BrickComponentData_WireGraph_Exec_PlayClientAudio;
   BrickComponentType_WireGraph_Exec_PlayGlobalAudio: BrickComponentData_WireGraph_Exec_PlayGlobalAudio;
+  BrickComponentType_WireGraph_Exec_PlayerState_DisplayText: BrickComponentData_WireGraph_Exec_PlayerState_DisplayText;
+  BrickComponentType_WireGraph_Exec_PlayerState_ForceRespawn: BrickComponentData_WireGraph_Exec_PlayerState_ForceRespawn;
+  BrickComponentType_WireGraph_Exec_PlayerState_GetDisplayName: BrickComponentData_WireGraph_Exec_PlayerState_GetDisplayName;
+  BrickComponentType_WireGraph_Exec_PlayerState_GetFromEntity: BrickComponentData_WireGraph_Exec_PlayerState_GetFromEntity;
+  BrickComponentType_WireGraph_Exec_PlayerState_GetUserId: BrickComponentData_WireGraph_Exec_PlayerState_GetUserId;
+  BrickComponentType_WireGraph_Exec_PlayerState_GetUserName: BrickComponentData_WireGraph_Exec_PlayerState_GetUserName;
+  BrickComponentType_WireGraph_Exec_PlayerState_HasPermission: BrickComponentData_WireGraph_Exec_PlayerState_HasPermission;
+  BrickComponentType_WireGraph_Exec_PlayerState_HasRole: BrickComponentData_WireGraph_Exec_PlayerState_HasRole;
+  BrickComponentType_WireGraph_Exec_PlayerState_IsTrustedByBrickOwner: BrickComponentData_WireGraph_Exec_PlayerState_IsTrustedByBrickOwner;
+  BrickComponentType_WireGraph_Exec_PlayerState_SetCanRespawn: BrickComponentData_WireGraph_Exec_PlayerState_SetCanRespawn;
+  BrickComponentType_WireGraph_Exec_PlayerState_ShowChatMessage: BrickComponentData_WireGraph_Exec_PlayerState_ShowChatMessage;
+  BrickComponentType_WireGraph_Exec_PlayerState_ShowMessageBox: BrickComponentData_WireGraph_Exec_PlayerState_ShowMessageBox;
+  BrickComponentType_WireGraph_Exec_PlayerState_ShowStatusMessage: BrickComponentData_WireGraph_Exec_PlayerState_ShowStatusMessage;
   BrickComponentType_WireGraph_Exec_PrefabSpawner: BrickComponentData_WireGraph_Exec_PrefabSpawner;
   BrickComponentType_WireGraph_Exec_PrintToConsole: BrickComponentData_WireGraph_Exec_PrintToConsole;
   BrickComponentType_WireGraph_Exec_Random: BrickComponentData_WireGraph_Exec_Random;
+  BrickComponentType_WireGraph_Exec_SpawnExplosion: BrickComponentData_WireGraph_Exec_SpawnExplosion;
+  BrickComponentType_WireGraph_Exec_SpawnExplosionAt: BrickComponentData_WireGraph_Exec_SpawnExplosionAt;
   BrickComponentType_WireGraph_Exec_Sweep: BrickComponentData_WireGraph_Exec_Sweep;
+  BrickComponentType_WireGraph_Exec_SweepSimple: BrickComponentData_WireGraph_Exec_SweepSimple;
   BrickComponentType_WireGraph_Exec_Toggle: BrickComponentData_WireGraph_Exec_Toggle;
   BrickComponentType_WireGraph_Exec_Union: BrickComponentData_WireGraph_ExecUnion;
   BrickComponentType_WireGraph_Exec_Var_Get: BrickComponentData_WireGraph_Exec_Var_Get;
   BrickComponentType_WireGraph_Exec_Var_Increment: BrickComponentData_WireGraph_Exec_Var_EditOrGet;
   BrickComponentType_WireGraph_Exec_Var_Set: BrickComponentData_WireGraph_Exec_Var_EditOrGet;
+  BrickComponentType_WireGraph_Exec_Zone_GetEntities: BrickComponentData_WireGraph_Exec_Zone_GetEntities;
+  BrickComponentType_WireGraph_Exec_Zone_GetPlayers: BrickComponentData_WireGraph_Exec_Zone_GetPlayers;
   BrickComponentType_WireGraph_Expr_BitwiseAND: BrickComponentData_WireGraph_Expr_IntInt_Int;
   BrickComponentType_WireGraph_Expr_BitwiseBitCount: BrickComponentData_WireGraph_Expr_Int_Int;
   BrickComponentType_WireGraph_Expr_BitwiseNAND: BrickComponentData_WireGraph_Expr_IntInt_Int;
@@ -1826,6 +2666,7 @@ export type ComponentTypeDataMap = {
   BrickComponentType_WireGraph_Expr_BitwiseOR: BrickComponentData_WireGraph_Expr_IntInt_Int;
   BrickComponentType_WireGraph_Expr_BitwiseShiftLeft: BrickComponentData_WireGraph_Expr_IntInt_Int;
   BrickComponentType_WireGraph_Expr_BitwiseShiftRight: BrickComponentData_WireGraph_Expr_IntInt_Int;
+  BrickComponentType_WireGraph_Expr_BitwiseShiftRightLogical: BrickComponentData_WireGraph_Expr_IntInt_Int;
   BrickComponentType_WireGraph_Expr_BitwiseXOR: BrickComponentData_WireGraph_Expr_IntInt_Int;
   BrickComponentType_WireGraph_Expr_Ceil: BrickComponentData_WireGraph_Expr_Float_Float;
   BrickComponentType_WireGraph_Expr_ChangeDetector: BrickComponentData_WireGraph_Expr_ChangeDetector;
@@ -1843,8 +2684,13 @@ export type ComponentTypeDataMap = {
   BrickComponentType_WireGraph_Expr_DirectionToRotation: BrickComponentData_WireGraph_Expr_DirectionToRotation;
   BrickComponentType_WireGraph_Expr_EdgeDetector: BrickComponentData_WireGraph_Expr_EdgeDetector;
   BrickComponentType_WireGraph_Expr_EdgeDetectorExec: BrickComponentData_WireGraph_Expr_EdgeDetectorExec;
+  BrickComponentType_WireGraph_Expr_EnumToInteger: BrickComponentData_WireGraph_Expr_EnumToInteger;
   BrickComponentType_WireGraph_Expr_Floor: BrickComponentData_WireGraph_Expr_Float_Float;
+  BrickComponentType_WireGraph_Expr_Gamemode_IsBuilderTeam: BrickComponentData_WireGraph_Expr_Gamemode_TeamPredicate;
+  BrickComponentType_WireGraph_Expr_Gamemode_IsUnaffiliatedTeam: BrickComponentData_WireGraph_Expr_Gamemode_TeamPredicate;
+  BrickComponentType_WireGraph_Expr_IntegerToEnum: BrickComponentData_WireGraph_Expr_IntegerToEnum;
   BrickComponentType_WireGraph_Expr_InvertRotation: BrickComponentData_WireGraph_Expr_InvertRotation;
+  BrickComponentType_WireGraph_Expr_ItemToPickup: BrickComponentData_WireGraph_Expr_ItemToPickup;
   BrickComponentType_WireGraph_Expr_LogicalAND: BrickComponentData_WireGraph_Expr_BoolBool_Bool;
   BrickComponentType_WireGraph_Expr_LogicalNAND: BrickComponentData_WireGraph_Expr_BoolBool_Bool;
   BrickComponentType_WireGraph_Expr_LogicalNOR: BrickComponentData_WireGraph_Expr_BoolBool_Bool;
@@ -1898,6 +2744,7 @@ export type ComponentTypeDataMap = {
   BrickComponentType_WireGraph_Expr_QuatFromAxisAngle: BrickComponentData_WireGraph_Expr_QuatFromAxisAngle;
   BrickComponentType_WireGraph_Expr_QuatSlerp: BrickComponentData_WireGraph_Expr_QuatSlerp;
   BrickComponentType_WireGraph_Expr_QuatToAxisAngle: BrickComponentData_WireGraph_Expr_QuatToAxisAngle;
+  BrickComponentType_WireGraph_Expr_Remap: BrickComponentData_WireGraph_Expr_Remap;
   BrickComponentType_WireGraph_Expr_RotateVector: BrickComponentData_WireGraph_Expr_RotateVector;
   BrickComponentType_WireGraph_Expr_RotationToDirection: BrickComponentData_WireGraph_Expr_RotationToDirection;
   BrickComponentType_WireGraph_Expr_Round: BrickComponentData_WireGraph_Expr_Float_Float;
@@ -1907,6 +2754,8 @@ export type ComponentTypeDataMap = {
   BrickComponentType_WireGraph_Expr_SplitQuaternion: BrickComponentData_WireGraph_Expr_SplitQuaternion;
   BrickComponentType_WireGraph_Expr_SplitRotation: BrickComponentData_WireGraph_Expr_SplitRotation;
   BrickComponentType_WireGraph_Expr_SplitVector: BrickComponentData_WireGraph_Expr_SplitVector;
+  BrickComponentType_WireGraph_Expr_String_CharacterToCodepoint: BrickComponentData_WireGraph_Expr_String_CharacterToCodepoint;
+  BrickComponentType_WireGraph_Expr_String_CodepointToCharacter: BrickComponentData_WireGraph_Expr_String_CodepointToCharacter;
   BrickComponentType_WireGraph_Expr_String_Concatenate: BrickComponentData_WireGraph_Expr_String_Concatenate;
   BrickComponentType_WireGraph_Expr_String_Contains: BrickComponentData_WireGraph_Expr_String_Contains;
   BrickComponentType_WireGraph_Expr_String_EndsWith: BrickComponentData_WireGraph_Expr_String_EndsWith;
@@ -1933,19 +2782,25 @@ export type ComponentTypeDataMap = {
   BrickComponentType_WireGraph_Expr_VecScale: BrickComponentData_WireGraph_Expr_VecFloat_Vec;
   BrickComponentType_WireGraph_Fake_Gamemode_CharacterDamagedEvent: BrickComponentData_WireGraph_Fake_CharacterDamageEvent;
   BrickComponentType_WireGraph_Fake_Gamemode_CharacterDiedEvent: BrickComponentData_WireGraph_Fake_CharacterDeathEvent;
+  BrickComponentType_WireGraph_Fake_Gamemode_CharacterFiredWeaponEvent: BrickComponentData_WireGraph_Fake_CharacterFiredWeaponEvent;
   BrickComponentType_WireGraph_Fake_Gamemode_CharacterSpawnedEvent: BrickComponentData_WireGraph_Fake_CharacterEvent;
   BrickComponentType_WireGraph_Fake_Gamemode_ControllerJoinedEvent: BrickComponentData_WireGraph_Fake_ControllerEvent;
+  BrickComponentType_WireGraph_Fake_Gamemode_ControllerJoinedTeamEvent: BrickComponentData_WireGraph_Fake_ControllerTeamEvent;
   BrickComponentType_WireGraph_Fake_Gamemode_ControllerLeftEvent: BrickComponentData_WireGraph_Fake_ControllerEvent;
+  BrickComponentType_WireGraph_Fake_Gamemode_ControllerLeftTeamEvent: BrickComponentData_WireGraph_Fake_ControllerTeamEvent;
   BrickComponentType_WireGraph_Fake_Gamemode_RoundEndEvent: BrickComponentData_WireGraph_Fake_RoundEvent;
   BrickComponentType_WireGraph_Fake_Gamemode_RoundStartEvent: BrickComponentData_WireGraph_Fake_RoundEvent;
   BrickComponentType_WireGraph_FindPlayer: BrickComponentData_WireGraph_FindPlayer;
   BrickComponentType_WireGraph_FontReference: BrickComponentData_WireGraph_FontReference;
+  BrickComponentType_WireGraph_FormatDate: BrickComponentData_WireGraph_FormatDate;
+  BrickComponentType_WireGraph_GetUnixEpoch: BrickComponentData_WireGraph_GetUnixEpoch;
   BrickComponentType_WireGraph_ItemReference: BrickComponentData_WireGraph_ItemReference;
   BrickComponentType_WireGraph_OneShotAudioReference: BrickComponentData_WireGraph_OneShotAudioReference;
   BrickComponentType_WireGraph_ParticleReference: BrickComponentData_WireGraph_ParticleReference;
   BrickComponentType_WireGraph_PickupReference: BrickComponentData_WireGraph_PickupReference;
   BrickComponentType_WireGraph_ProjectileReference: BrickComponentData_WireGraph_ProjectileReference;
   BrickComponentType_WireGraph_ServerUptime: BrickComponentData_WireGraph_ServerUptime;
+  BrickComponentType_WireGraph_WeaponResourceReference: BrickComponentData_WireGraph_WeaponResourceReference;
   BrickComponentType_WireGraph_WheelEngineAudioReference: BrickComponentData_WireGraph_WheelEngineAudioReference;
   Component_AudioEmitter: BrickComponentData_AudioEmitter;
   Component_BotSpawn: BrickComponentData_BotSpawn;

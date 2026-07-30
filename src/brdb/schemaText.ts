@@ -30,7 +30,10 @@ export function parseSchemaText(text: string): SchemaData {
   const enums = new Map<string, Map<string, number>>();
   const variants = new Map<string, string[]>();
   const structs = new Map<string, Map<string, PropDesc>>();
-  const declRe = /\b(enum|variant|struct)\s+([A-Za-z0-9_]+)\s*\{([^{}]*)\}/g;
+  // A struct body may contain one level of nested braces for map property
+  // types (`Field: {KeyType: ValueType}`), so the body isn't purely brace-free.
+  const declRe =
+    /\b(enum|variant|struct)\s+([A-Za-z0-9_]+)\s*\{((?:[^{}]|\{[^{}]*\})*)\}/g;
   const enumEntryRe = new RegExp(
     String.raw`^(${IDENT})\s*=\s*(-?\d+(?:_\d+)*|0b[01]+(?:_[01]+)*|0x[0-9a-fA-F]+(?:_[0-9a-fA-F]+)*)$`
   );
@@ -38,6 +41,8 @@ export function parseSchemaText(text: string): SchemaData {
   const propRe = new RegExp(
     String.raw`^(\w+)\s*:\s*(\w+)\s*(\[\s*(flat)?\s*\])?$`
   );
+  // Map property: `Field: {KeyType: ValueType}`.
+  const mapRe = new RegExp(String.raw`^(\w+)\s*:\s*\{\s*(\w+)\s*:\s*(\w+)\s*\}$`);
 
   let lastEnd = 0;
   let match: RegExpExecArray | null;
@@ -73,6 +78,11 @@ export function parseSchemaText(text: string): SchemaData {
     } else {
       const props = new Map<string, PropDesc>();
       for (const item of items) {
+        const mapM = mapRe.exec(item);
+        if (mapM) {
+          props.set(mapM[1], { kind: 'map', key: mapM[2], value: mapM[3] });
+          continue;
+        }
         const m = propRe.exec(item);
         if (!m)
           throw new Error(
