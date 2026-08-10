@@ -226,42 +226,133 @@ if (componentPairs.length < 50 || wirePorts.length < 100 || !entityPairs.length)
     `component_db extraction failed (components=${componentPairs.length}, ports=${wirePorts.length}, entities=${entityPairs.length})`
   );
 
-// STRUCT_DEFAULTS: component data struct -> game-default field values.
-// Values are Rust expressions; translate the four forms that occur.
-const translateDefault = (expr, ctx) => {
-  if (expr === 'true') return true;
-  if (expr === 'false') return false;
-  const num =
-    /^(-?\d+(?:\.\d+)?(?:[eE]-?\d+)?)(?:f32|f64|[iu](?:8|16|32|64))?$/.exec(
-      expr
-    );
-  if (num) return Number(num[1]);
-  const str = /^String::from\("([^"]*)"\)$/.exec(expr);
-  if (str) return str[1];
-  const color =
-    /^SavedBrickColor \{ r: (\d+), g: (\d+), b: (\d+), a: (\d+) \}$/.exec(expr);
-  // Field order matches the embedded Color struct (B, G, R, A).
-  if (color) return { B: +color[3], G: +color[2], R: +color[1], A: +color[4] };
-  throw new Error(`STRUCT_DEFAULTS: unhandled default at ${ctx}: ${expr}`);
-};
+// STRUCT_DEFAULTS: component data struct -> game-default field values. The values are Rust
+// expressions; parse them with a small balanced-delimiter parser. Struct-typed defaults are
+// emitted as `NestedStructDefault(vec![("X", Box::new(..)), ..])` (e.g. Vector2D {X,Y},
+// LinearColor {R,G,B,A}) and become nested JS objects — a plain regex can't handle the nesting.
 const defaultsStart = dbRs.indexOf('pub static STRUCT_DEFAULTS');
 if (defaultsStart < 0)
   throw new Error('component_db.rs: STRUCT_DEFAULTS not found');
-const defaultsSrc = dbRs.slice(defaultsStart);
 const structDefaults = {};
-for (const [, structName, body] of defaultsSrc.matchAll(
-  /\("([^"]+)", vec!\[([^\]]*)\]/g
-)) {
-  const fields = {};
-  const pairs = [
-    ...body.matchAll(/\("([^"]+)",\s*Box::new\((.+?)\)(?: as Box<[^>]+>)?\),/g),
-  ];
-  const declared = [...body.matchAll(/\("([^"]+)",\s*Box::new\(/g)].length;
-  if (pairs.length !== declared)
-    throw new Error(`STRUCT_DEFAULTS: unparsed field in ${structName}`);
-  for (const [, field, expr] of pairs)
-    fields[field] = translateDefault(expr, `${structName}.${field}`);
-  structDefaults[structName] = fields;
+{
+  const src = dbRs.slice(defaultsStart);
+  let i = src.indexOf('vec!['); // the outer defaults vec
+  if (i < 0) throw new Error('component_db.rs: STRUCT_DEFAULTS vec not found');
+  i += 'vec!['.length;
+  const at = tok => src.startsWith(tok, i);
+  const ws = () => {
+    while (i < src.length && /\s/.test(src[i])) i++;
+  };
+  const eat = tok => {
+    ws();
+    if (at(tok)) {
+      i += tok.length;
+      return true;
+    }
+    return false;
+  };
+  const expect = tok => {
+    if (!eat(tok))
+      throw new Error(
+        `STRUCT_DEFAULTS: expected '${tok}' near: ${src.slice(i, i + 60)}`
+      );
+  };
+  const parseString = () => {
+    ws();
+    if (src[i] !== '"')
+      throw new Error(
+        `STRUCT_DEFAULTS: expected string near: ${src.slice(i, i + 40)}`
+      );
+    i++;
+    let out = '';
+    while (i < src.length && src[i] !== '"') {
+      if (src[i] === '\\') {
+        out += src[i + 1];
+        i += 2;
+      } else out += src[i++];
+    }
+    i++; // closing quote
+    return out;
+  };
+  // Parse a `("name", <value>), ...` list terminated by ']', invoking onPair for each.
+  const parsePairs = onPair => {
+    ws();
+    while (!eat(']')) {
+      expect('(');
+      const name = parseString();
+      expect(',');
+      const val = parseValue();
+      expect(')');
+      eat(',');
+      onPair(name, val);
+      ws();
+    }
+  };
+  const parseValue = () => {
+    ws();
+    if (eat('Box::new(')) {
+      const v = parseValue();
+      expect(')');
+      ws();
+      if (at('as Box<')) i = src.indexOf('>', i) + 1; // strip ` as Box<dyn AsBrdbValue>`
+      return v;
+    }
+    if (eat('NestedStructDefault(')) {
+      expect('vec![');
+      const obj = {};
+      parsePairs((k, v) => (obj[k] = v));
+      expect(')');
+      return obj;
+    }
+    if (eat('SavedBrickColor')) {
+      expect('{');
+      const c = {};
+      while (!eat('}')) {
+        ws();
+        const key = src[i++]; // r/g/b/a
+        expect(':');
+        ws();
+        const m = /^-?\d+/.exec(src.slice(i));
+        c[key.toUpperCase()] = Number(m[0]);
+        i += m[0].length;
+        eat(',');
+      }
+      return { B: c.B, G: c.G, R: c.R, A: c.A }; // embedded Color field order
+    }
+    if (eat('String::from(')) {
+      const s = parseString();
+      expect(')');
+      return s;
+    }
+    if (eat('true')) return true;
+    if (eat('false')) return false;
+    const m =
+      /^-?\d+(?:\.\d+)?(?:[eE]-?\d+)?(?:f32|f64|[iu](?:8|16|32|64))?/.exec(
+        src.slice(i)
+      );
+    if (m) {
+      i += m[0].length;
+      return Number(m[0].replace(/(?:f32|f64|[iu](?:8|16|32|64))$/, ''));
+    }
+    throw new Error(
+      `STRUCT_DEFAULTS: unhandled value near: ${src.slice(i, i + 60)}`
+    );
+  };
+
+  // Top level: `("StructName", vec![ <fields> ]), ...`
+  ws();
+  while (!eat(']')) {
+    expect('(');
+    const structName = parseString();
+    expect(',');
+    expect('vec![');
+    const fields = {};
+    parsePairs((k, v) => (fields[k] = v));
+    expect(')');
+    eat(',');
+    structDefaults[structName] = fields;
+    ws();
+  }
 }
 if (Object.keys(structDefaults).length < 100)
   throw new Error(

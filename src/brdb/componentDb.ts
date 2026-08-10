@@ -1391,6 +1391,11 @@ export const COMPONENT_STRUCT_DEFAULTS: ReadonlyMap<
       bActiveBot: true,
       bSpawnEnable: true,
       bDeleteBot: false,
+      MoveTarget: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
       BotName: '',
       bColorsAreLinear: true,
       TeamCollisionChannel: 0,
@@ -1440,6 +1445,11 @@ export const COMPONENT_STRUCT_DEFAULTS: ReadonlyMap<
       ConsoleTag: '',
     },
     BrickComponentData_ExplosionSpawner: {
+      SpawnOffset: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
       ScaleMultiplier: 1,
       DamageMultiplier: 1,
     },
@@ -1449,6 +1459,11 @@ export const COMPONENT_STRUCT_DEFAULTS: ReadonlyMap<
       Strength: 25,
       Damping: 1,
       MaxForce: 0,
+      TargetAxis: {
+        X: 0,
+        Y: 0,
+        Z: 1,
+      },
     },
     BrickComponentData_Interact: {
       Message: '',
@@ -1464,7 +1479,29 @@ export const COMPONENT_STRUCT_DEFAULTS: ReadonlyMap<
       bIsLooseZone: false,
       bIsShareZone: false,
       bWater: false,
+      WaterScattering: {
+        X: 0.0005,
+        Y: 0.0005,
+        Z: 0.0005,
+      },
+      WaterAbsorption: {
+        X: 0.0125,
+        Y: 0.000833,
+        Z: 0.000357,
+      },
       WaterFogIntensity: 0.0002,
+      WaterFogScatteringColor: {
+        R: 0.5,
+        G: 1,
+        B: 0.75,
+        A: 1,
+      },
+      WaterFogAmbientColor: {
+        R: 0.1,
+        G: 0.409524,
+        B: 0.75,
+        A: 1,
+      },
       WaterFogScatteringScale: 3,
       WaterFogAmbientScale: 0.25,
       bDetectPlayers: true,
@@ -1502,8 +1539,16 @@ export const COMPONENT_STRUCT_DEFAULTS: ReadonlyMap<
       DamageMultiplier: 1,
       WeaponSpeedMultiplier: 1,
       ItemNameOverride: '',
+      WeaponAmmoOverride: {
+        bOverrideStartingAmmo: false,
+      },
       PickupOffsetDirection: 0,
       PickupOffsetDistance: 5,
+      PickupRotation: {
+        Pitch: 0,
+        Yaw: 0,
+        Roll: 0,
+      },
       PickupScale: 1,
       bOverridePickupColors: false,
       bPickupAnimationEnabled: true,
@@ -1512,7 +1557,7 @@ export const COMPONENT_STRUCT_DEFAULTS: ReadonlyMap<
       PickupSpinSpeed: 0.2,
       PickupBobSpeed: 0.1,
       PickupBobHeight: 4,
-      PickupAnimationPhase: 0.16730247,
+      PickupAnimationPhase: 0.17090365,
     },
     BrickComponentData_Joint_Wheel: {
       bDiscoverable: true,
@@ -1602,6 +1647,21 @@ export const COMPONENT_STRUCT_DEFAULTS: ReadonlyMap<
     },
     BrickComponentData_PrefabSpawn: {
       Prefab: '',
+      SpawnOffset: {
+        X: 0,
+        Y: 0,
+        Z: 20,
+      },
+      SpawnOffsetRotation: {
+        Pitch: 0,
+        Yaw: 0,
+        Roll: 0,
+      },
+      SpawnVelocity: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
       bSpawnEnable: true,
       RespawnTime: 5,
     },
@@ -1640,10 +1700,25 @@ export const COMPONENT_STRUCT_DEFAULTS: ReadonlyMap<
     },
     BrickComponentData_Seat_V2: {
       bIsOccupied: false,
+      ExitOffset: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
       bRollCameraInThirdPerson: false,
       CameraOrigin: 0,
+      CameraOriginOffset: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
       bScaleCameraOriginOffsetWithZoom: false,
       ThirdPersonStartingZoom: 150,
+      ThirdPersonCameraRotation: {
+        Pitch: 0,
+        Yaw: 0,
+        Roll: 0,
+      },
       SeatMode: 0,
       bStickyPlaneThrottle: false,
       bFlyingGroundControls: false,
@@ -1688,6 +1763,11 @@ export const COMPONENT_STRUCT_DEFAULTS: ReadonlyMap<
       bEnable: true,
     },
     BrickComponentData_SpotLight: {
+      Rotation: {
+        Pitch: 270,
+        Yaw: 0,
+        Roll: 0,
+      },
       InnerConeAngle: 30,
       OuterConeAngle: 60,
       bEnabled: true,
@@ -1720,6 +1800,15 @@ export const COMPONENT_STRUCT_DEFAULTS: ReadonlyMap<
       LineHeight: 10,
       WidthScale: 1,
       LineOffset: 0,
+      Anchor: {
+        X: 0.5,
+        Y: 0.5,
+      },
+      Offset: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
       Color: {
         B: 255,
         G: 255,
@@ -1772,6 +1861,16 @@ export const COMPONENT_STRUCT_DEFAULTS: ReadonlyMap<
     },
     BrickComponentData_WeightBrick: {
       Mass: 1,
+      MassSize: {
+        X: 10,
+        Y: 10,
+        Z: 4,
+      },
+      MassOffset: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
     },
     BrickComponentData_WheelEngine_V2: {
       bEnabled: true,
@@ -1853,6 +1952,12 @@ export const COMPONENT_STRUCT_DEFAULTS: ReadonlyMap<
     },
     BrickComponentData_WireGraphPseudo_Dampen: {
       SmoothTime: 0.3,
+      Velocity: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+        W: 0,
+      },
     },
     BrickComponentData_WireGraphPseudo_QueueSeconds: {
       SecondsToWait: 1,
@@ -1928,11 +2033,21 @@ export const COMPONENT_STRUCT_DEFAULTS: ReadonlyMap<
       IndexB: 0,
       bOutOfBounds: false,
     },
+    BrickComponentData_WireGraph_Exec_Character_AddInventoryBrick: {
+      ProceduralSize: {
+        X: 5,
+        Y: 5,
+        Z: 6,
+      },
+    },
     BrickComponentData_WireGraph_Exec_Character_AddInventoryItemAdv: {
       DamageMultiplier: 1,
       WeaponSpeedMultiplier: 1,
       ItemScale: 1,
       ItemNameOverride: '',
+      WeaponAmmoOverride: {
+        bOverrideStartingAmmo: false,
+      },
       bOverrideColors: false,
     },
     BrickComponentData_WireGraph_Exec_Character_GetAim: {
@@ -1962,12 +2077,27 @@ export const COMPONENT_STRUCT_DEFAULTS: ReadonlyMap<
     },
     BrickComponentData_WireGraph_Exec_Character_SetInventoryBrick: {
       Slot: 0,
+      ProceduralSize: {
+        X: 5,
+        Y: 5,
+        Z: 6,
+      },
     },
     BrickComponentData_WireGraph_Exec_Character_SetInventoryEntity: {
       Slot: 0,
     },
     BrickComponentData_WireGraph_Exec_Character_SetInventoryEntry: {
       Slot: 0,
+      EntryPlan: {
+        Type: 0,
+        BrickTypeIfBrick: {
+          ProceduralSize: {
+            X: 5,
+            Y: 5,
+            Z: 6,
+          },
+        },
+      },
     },
     BrickComponentData_WireGraph_Exec_Character_SetInventoryItem: {
       Slot: 0,
@@ -1978,6 +2108,9 @@ export const COMPONENT_STRUCT_DEFAULTS: ReadonlyMap<
       WeaponSpeedMultiplier: 1,
       ItemScale: 1,
       ItemNameOverride: '',
+      WeaponAmmoOverride: {
+        bOverrideStartingAmmo: false,
+      },
       bOverrideColors: false,
     },
     BrickComponentData_WireGraph_Exec_Character_SetTempPermission: {
@@ -2000,8 +2133,96 @@ export const COMPONENT_STRUCT_DEFAULTS: ReadonlyMap<
       Count: 3,
       Value: 0,
     },
+    BrickComponentData_WireGraph_Exec_Entity_AddLocationRotation: {
+      Vector: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
+      Rotation: {
+        Pitch: 0,
+        Yaw: 0,
+        Roll: 0,
+      },
+    },
+    BrickComponentData_WireGraph_Exec_Entity_AddVelocity: {
+      Vector: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
+      Rotation: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
+    },
+    BrickComponentData_WireGraph_Exec_Entity_GetAngularVelocity: {
+      AngularVelocity: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
+    },
+    BrickComponentData_WireGraph_Exec_Entity_GetLinearVelocity: {
+      LinearVelocity: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
+    },
+    BrickComponentData_WireGraph_Exec_Entity_GetLocation: {
+      Vector: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
+    },
+    BrickComponentData_WireGraph_Exec_Entity_GetLocationRotation: {
+      Vector: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
+      Rotation: {
+        Pitch: 0,
+        Yaw: 0,
+        Roll: 0,
+      },
+    },
+    BrickComponentData_WireGraph_Exec_Entity_GetRotation: {
+      Rotation: {
+        Pitch: 0,
+        Yaw: 0,
+        Roll: 0,
+      },
+    },
     BrickComponentData_WireGraph_Exec_Entity_GetTag: {
       Tag: '',
+    },
+    BrickComponentData_WireGraph_Exec_Entity_GetVelocity: {
+      Vector: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
+      Rotation: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
+    },
+    BrickComponentData_WireGraph_Exec_Entity_GetVelocityAtPoint: {
+      Point: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
+      LinearVelocity: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
     },
     BrickComponentData_WireGraph_Exec_Entity_PlayAudioAt: {
       VolumeMultiplier: 1,
@@ -2010,11 +2231,70 @@ export const COMPONENT_STRUCT_DEFAULTS: ReadonlyMap<
       MaxDistance: 10000,
       bSpatialization: true,
     },
+    BrickComponentData_WireGraph_Exec_Entity_SetAngularVelocity: {
+      AngularVelocity: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
+    },
     BrickComponentData_WireGraph_Exec_Entity_SetFrozen: {
       bFrozen: false,
     },
+    BrickComponentData_WireGraph_Exec_Entity_SetGravityDirection: {
+      Rotation: {
+        Pitch: 0,
+        Yaw: 0,
+        Roll: 0,
+      },
+    },
+    BrickComponentData_WireGraph_Exec_Entity_SetLinearVelocity: {
+      LinearVelocity: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
+    },
+    BrickComponentData_WireGraph_Exec_Entity_SetLocation: {
+      Vector: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
+    },
+    BrickComponentData_WireGraph_Exec_Entity_SetLocationRotation: {
+      Vector: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
+      Rotation: {
+        Pitch: 0,
+        Yaw: 0,
+        Roll: 0,
+      },
+    },
+    BrickComponentData_WireGraph_Exec_Entity_SetRotation: {
+      Rotation: {
+        Pitch: 0,
+        Yaw: 0,
+        Roll: 0,
+      },
+    },
     BrickComponentData_WireGraph_Exec_Entity_SetTag: {
       Tag: '',
+    },
+    BrickComponentData_WireGraph_Exec_Entity_SetVelocity: {
+      Vector: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
+      Rotation: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
     },
     BrickComponentData_WireGraph_Exec_Gamemode_BroadcastChatMessage: {
       Message: '',
@@ -2069,15 +2349,53 @@ export const COMPONENT_STRUCT_DEFAULTS: ReadonlyMap<
     BrickComponentData_WireGraph_Exec_PlayerState_DisplayText: {
       Text: '',
       Typeface: 0,
+      Anchor: {
+        X: 0.5,
+        Y: 0.5,
+      },
+      Position: {
+        X: 0,
+        Y: 0,
+      },
       Angle: 0,
       ZOrder: 0,
+      Scale: {
+        X: 1,
+        Y: 1,
+      },
+      Pivot: {
+        X: -1,
+        Y: 0.5,
+      },
       FontSize: 16,
+      FontColor: {
+        R: 1,
+        G: 1,
+        B: 1,
+        A: 1,
+      },
       LetterSpacing: 0,
       Skew: 0,
       LineHeight: 1,
       OutlineSize: 2,
+      OutlineColor: {
+        R: 0.009134059,
+        G: 0.00699541,
+        B: 0.01850022,
+        A: 1,
+      },
       bMiteredOutline: false,
       WrapWidth: 0,
+      ShadowOffset: {
+        X: 0,
+        Y: 0,
+      },
+      ShadowColor: {
+        R: 0,
+        G: 0,
+        B: 0,
+        A: 0,
+      },
       Justification: 0,
       Transition: 0,
       Easing: 0,
@@ -2105,6 +2423,21 @@ export const COMPONENT_STRUCT_DEFAULTS: ReadonlyMap<
     },
     BrickComponentData_WireGraph_Exec_PrefabSpawner: {
       Prefab: '',
+      SpawnOffset: {
+        X: 0,
+        Y: 0,
+        Z: 20,
+      },
+      SpawnOffsetRotation: {
+        Pitch: 0,
+        Yaw: 0,
+        Roll: 0,
+      },
+      SpawnVelocity: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
       Lifetime: 5,
       Limit: 5,
     },
@@ -2112,14 +2445,34 @@ export const COMPONENT_STRUCT_DEFAULTS: ReadonlyMap<
       Text: '',
     },
     BrickComponentData_WireGraph_Exec_SpawnExplosion: {
+      SpawnOffset: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
       ScaleMultiplier: 1,
       DamageMultiplier: 1,
     },
     BrickComponentData_WireGraph_Exec_SpawnExplosionAt: {
+      WorldPosition: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
       ScaleMultiplier: 1,
       DamageMultiplier: 1,
     },
     BrickComponentData_WireGraph_Exec_Sweep: {
+      Origin: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
+      Direction: {
+        X: 1,
+        Y: 0,
+        Z: 0,
+      },
       Distance: 100,
       Radius: 0,
       CollisionChannel: 0,
@@ -2133,6 +2486,16 @@ export const COMPONENT_STRUCT_DEFAULTS: ReadonlyMap<
       bDetectMap: true,
       bRelative: false,
       bIgnoreOwningGrid: true,
+      HitLocation: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
+      HitNormal: {
+        X: 0,
+        Y: 0,
+        Z: 1,
+      },
       HitDistance: 0,
     },
     BrickComponentData_WireGraph_Exec_SweepSimple: {
@@ -2150,6 +2513,16 @@ export const COMPONENT_STRUCT_DEFAULTS: ReadonlyMap<
       bOnlyHitPlayerBodyParts: false,
       bDetectPhysics: true,
       bDetectMap: true,
+      HitLocation: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
+      HitNormal: {
+        X: 0,
+        Y: 0,
+        Z: 1,
+      },
       HitDistance: 0,
     },
     BrickComponentData_WireGraph_Exec_Toggle: {
@@ -2172,13 +2545,46 @@ export const COMPONENT_STRUCT_DEFAULTS: ReadonlyMap<
       bPulseOnChange: false,
     },
     BrickComponentData_WireGraph_Expr_ColorBlend: {
+      ColorA: {
+        R: 0,
+        G: 0,
+        B: 0,
+        A: 1,
+      },
+      ColorB: {
+        R: 1,
+        G: 1,
+        B: 1,
+        A: 1,
+      },
       Alpha: 0.5,
       BlendSpace: 0,
       bClampAlpha: true,
     },
     BrickComponentData_WireGraph_Expr_ColorConvert: {
+      Input: {
+        R: 1,
+        G: 1,
+        B: 1,
+        A: 1,
+      },
       FromSpace: 0,
       ToSpace: 0,
+    },
+    BrickComponentData_WireGraph_Expr_ColorToHex: {
+      Input: {
+        R: 1,
+        G: 1,
+        B: 1,
+        A: 1,
+      },
+    },
+    BrickComponentData_WireGraph_Expr_DirectionToRotation: {
+      Direction: {
+        X: 1,
+        Y: 0,
+        Z: 0,
+      },
     },
     BrickComponentData_WireGraph_Expr_EdgeDetector: {
       Input: 0,
@@ -2201,6 +2607,14 @@ export const COMPONENT_STRUCT_DEFAULTS: ReadonlyMap<
     BrickComponentData_WireGraph_Expr_IntegerToEnum: {
       Input: 0,
       bWrap: false,
+    },
+    BrickComponentData_WireGraph_Expr_InvertRotation: {
+      Input: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+        W: 1,
+      },
     },
     BrickComponentData_WireGraph_Expr_MakeColor: {
       R: 1,
@@ -2257,13 +2671,78 @@ export const COMPONENT_STRUCT_DEFAULTS: ReadonlyMap<
     BrickComponentData_WireGraph_Expr_NearlyEqual: {
       Tolerance: 0.00009999999747378752,
     },
+    BrickComponentData_WireGraph_Expr_QuatAngleBetween: {
+      InputA: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+        W: 1,
+      },
+      InputB: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+        W: 1,
+      },
+    },
+    BrickComponentData_WireGraph_Expr_QuatBetween: {
+      From: {
+        X: 1,
+        Y: 0,
+        Z: 0,
+      },
+      To: {
+        X: 1,
+        Y: 0,
+        Z: 0,
+      },
+    },
+    BrickComponentData_WireGraph_Expr_QuatDotProduct: {
+      InputA: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+        W: 1,
+      },
+      InputB: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+        W: 1,
+      },
+    },
     BrickComponentData_WireGraph_Expr_QuatFromAxisAngle: {
+      Axis: {
+        X: 0,
+        Y: 0,
+        Z: 1,
+      },
       Angle: 0,
     },
     BrickComponentData_WireGraph_Expr_QuatSlerp: {
+      InputA: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+        W: 1,
+      },
+      InputB: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+        W: 1,
+      },
       Alpha: 0,
       bShortestPath: true,
       bClampAlpha: true,
+    },
+    BrickComponentData_WireGraph_Expr_QuatToAxisAngle: {
+      Input: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+        W: 1,
+      },
     },
     BrickComponentData_WireGraph_Expr_Remap: {
       Value: 0,
@@ -2274,8 +2753,67 @@ export const COMPONENT_STRUCT_DEFAULTS: ReadonlyMap<
       Function: 0,
       Direction: 0,
     },
+    BrickComponentData_WireGraph_Expr_RotateVector: {
+      Rotation: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+        W: 1,
+      },
+      Vector: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
+    },
+    BrickComponentData_WireGraph_Expr_RotationToDirection: {
+      Rotation: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+        W: 1,
+      },
+    },
     BrickComponentData_WireGraph_Expr_Select: {
       bSelectB: false,
+    },
+    BrickComponentData_WireGraph_Expr_SplitColor: {
+      Input: {
+        R: 1,
+        G: 1,
+        B: 1,
+        A: 1,
+      },
+    },
+    BrickComponentData_WireGraph_Expr_SplitColorSRGB: {
+      Input: {
+        R: 1,
+        G: 1,
+        B: 1,
+        A: 1,
+      },
+    },
+    BrickComponentData_WireGraph_Expr_SplitQuaternion: {
+      Input: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+        W: 1,
+      },
+    },
+    BrickComponentData_WireGraph_Expr_SplitRotation: {
+      Input: {
+        Pitch: 0,
+        Yaw: 0,
+        Roll: 0,
+      },
+    },
+    BrickComponentData_WireGraph_Expr_SplitVector: {
+      Input: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
     },
     BrickComponentData_WireGraph_Expr_String_CharacterToCodepoint: {
       Character: '',
@@ -2353,7 +2891,50 @@ export const COMPONENT_STRUCT_DEFAULTS: ReadonlyMap<
       bSwap: false,
     },
     BrickComponentData_WireGraph_Expr_VecFloat_Vec: {
+      Input: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
       Scalar: 0,
+    },
+    BrickComponentData_WireGraph_Expr_VecVec_Float: {
+      InputA: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
+      InputB: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
+    },
+    BrickComponentData_WireGraph_Expr_VecVec_Vec: {
+      InputA: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
+      InputB: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
+    },
+    BrickComponentData_WireGraph_Expr_Vec_Float: {
+      Input: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
+    },
+    BrickComponentData_WireGraph_Expr_Vec_Vec: {
+      Input: {
+        X: 0,
+        Y: 0,
+        Z: 0,
+      },
     },
     BrickComponentData_WireGraph_Fake_RoundEvent: {
       RoundNumber: 0,
