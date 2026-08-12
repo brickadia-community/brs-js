@@ -2881,6 +2881,27 @@
       ]
     },
     {
+      "class": "BrickComponentType_WireGraph_Exec_WholeGridInteracted",
+      "bricks": [],
+      "inputs": [],
+      "outputs": [
+        "Character",
+        "bHeld"
+      ]
+    },
+    {
+      "class": "BrickComponentType_WireGraph_Exec_WholeGridTargeted",
+      "bricks": [],
+      "inputs": [],
+      "outputs": [
+        "CharacterThatJustHit",
+        "Damage",
+        "Targeted",
+        "WeaponNameThatJustHit",
+        "WeaponThatJustHit"
+      ]
+    },
+    {
       "class": "BrickComponentType_WireGraph_Exec_Zone_GetEntities",
       "bricks": [
         "B_1x1_Gate_Exec_Zone_GetEntities"

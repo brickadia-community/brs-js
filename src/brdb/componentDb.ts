@@ -676,6 +676,14 @@ export const COMPONENT_TYPE_STRUCTS: ReadonlyMap<string, string> = new Map([
     'BrickComponentData_WireGraph_Exec_Var_EditOrGet',
   ],
   [
+    'BrickComponentType_WireGraph_Exec_WholeGridInteracted',
+    'BrickComponentData_WireGraph_Exec_WholeGridInteracted',
+  ],
+  [
+    'BrickComponentType_WireGraph_Exec_WholeGridTargeted',
+    'BrickComponentData_WireGraph_Exec_WholeGridTargeted',
+  ],
+  [
     'BrickComponentType_WireGraph_Exec_Zone_GetEntities',
     'BrickComponentData_WireGraph_Exec_Zone_GetEntities',
   ],
@@ -1557,7 +1565,7 @@ export const COMPONENT_STRUCT_DEFAULTS: ReadonlyMap<
       PickupSpinSpeed: 0.2,
       PickupBobSpeed: 0.1,
       PickupBobHeight: 4,
-      PickupAnimationPhase: 0.17090365,
+      PickupAnimationPhase: 0.33140048,
     },
     BrickComponentData_Joint_Wheel: {
       bDiscoverable: true,
@@ -2528,6 +2536,11 @@ export const COMPONENT_STRUCT_DEFAULTS: ReadonlyMap<
     BrickComponentData_WireGraph_Exec_Toggle: {
       Value: false,
     },
+    BrickComponentData_WireGraph_Exec_WholeGridInteracted: {
+      bAllowNearbyInteraction: true,
+      bHiddenInteraction: false,
+      PromptCustomLabel: '',
+    },
     BrickComponentData_WireGraph_Exec_Zone_GetEntities: {
       TagFilter: '',
     },
@@ -3436,6 +3449,7 @@ export const WIRE_PORT_NAMES: readonly string[] = [
   'TargetAxis.Z',
   'TargetEntity',
   'TargetPosition',
+  'Targeted',
   'Team',
   'TeamCollisionChannel',
   'TeamName',
@@ -4786,6 +4800,22 @@ export const COMPONENT_WIRE_PORTS: ReadonlyMap<string, ComponentPortInfo> =
         bricks: ['B_1x1_Gate_Exec_Var_Set'],
         inputs: ['Exec', 'Value', 'VarRef'],
         outputs: ['ExecOut'],
+      },
+      BrickComponentType_WireGraph_Exec_WholeGridInteracted: {
+        bricks: [],
+        inputs: [],
+        outputs: ['Character', 'bHeld'],
+      },
+      BrickComponentType_WireGraph_Exec_WholeGridTargeted: {
+        bricks: [],
+        inputs: [],
+        outputs: [
+          'CharacterThatJustHit',
+          'Damage',
+          'Targeted',
+          'WeaponNameThatJustHit',
+          'WeaponThatJustHit',
+        ],
       },
       BrickComponentType_WireGraph_Exec_Zone_GetEntities: {
         bricks: ['B_1x1_Gate_Exec_Zone_GetEntities'],
@@ -8514,6 +8544,25 @@ export const COMPONENTS = {
       Value: 'Value',
       VarRef: 'VarRef',
       ExecOut: 'ExecOut',
+    },
+  },
+  Exec_WholeGridInteracted: {
+    NAME: 'BrickComponentType_WireGraph_Exec_WholeGridInteracted',
+    BRICKS: [],
+    PORTS: {
+      Character: 'Character',
+      bHeld: 'bHeld',
+    },
+  },
+  Exec_WholeGridTargeted: {
+    NAME: 'BrickComponentType_WireGraph_Exec_WholeGridTargeted',
+    BRICKS: [],
+    PORTS: {
+      CharacterThatJustHit: 'CharacterThatJustHit',
+      Damage: 'Damage',
+      Targeted: 'Targeted',
+      WeaponNameThatJustHit: 'WeaponNameThatJustHit',
+      WeaponThatJustHit: 'WeaponThatJustHit',
     },
   },
   Exec_Zone_GetEntities: {

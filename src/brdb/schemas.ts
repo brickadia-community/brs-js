@@ -1100,6 +1100,12 @@ export const SCHEMAS: Record<EmbeddedSchemaName, SchemaSource> = {
       BrickComponentData_WireGraph_Exec_Var_Get: {
         Value: 'WireGraphVariant',
       },
+      BrickComponentData_WireGraph_Exec_WholeGridInteracted: {
+        bAllowNearbyInteraction: 'bool',
+        bHiddenInteraction: 'bool',
+        PromptCustomLabel: 'str',
+      },
+      BrickComponentData_WireGraph_Exec_WholeGridTargeted: {},
       BrickComponentData_WireGraph_Exec_Zone_GetEntities: {
         TagFilter: 'str',
       },

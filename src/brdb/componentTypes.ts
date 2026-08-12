@@ -603,6 +603,14 @@ export type BrickComponentData_WireGraph_Exec_Var_Get = {
   Value: BrdbVariant;
 };
 
+export type BrickComponentData_WireGraph_Exec_WholeGridInteracted = {
+  bAllowNearbyInteraction: boolean;
+  bHiddenInteraction: boolean;
+  PromptCustomLabel: string;
+};
+
+export type BrickComponentData_WireGraph_Exec_WholeGridTargeted = {};
+
 export type BrickComponentData_WireGraph_Exec_Zone_GetEntities = {
   TagFilter: string;
 };
@@ -2656,6 +2664,8 @@ export type ComponentTypeDataMap = {
   BrickComponentType_WireGraph_Exec_Var_Get: BrickComponentData_WireGraph_Exec_Var_Get;
   BrickComponentType_WireGraph_Exec_Var_Increment: BrickComponentData_WireGraph_Exec_Var_EditOrGet;
   BrickComponentType_WireGraph_Exec_Var_Set: BrickComponentData_WireGraph_Exec_Var_EditOrGet;
+  BrickComponentType_WireGraph_Exec_WholeGridInteracted: BrickComponentData_WireGraph_Exec_WholeGridInteracted;
+  BrickComponentType_WireGraph_Exec_WholeGridTargeted: BrickComponentData_WireGraph_Exec_WholeGridTargeted;
   BrickComponentType_WireGraph_Exec_Zone_GetEntities: BrickComponentData_WireGraph_Exec_Zone_GetEntities;
   BrickComponentType_WireGraph_Exec_Zone_GetPlayers: BrickComponentData_WireGraph_Exec_Zone_GetPlayers;
   BrickComponentType_WireGraph_Expr_BitwiseAND: BrickComponentData_WireGraph_Expr_IntInt_Int;
