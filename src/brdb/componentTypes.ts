@@ -458,6 +458,10 @@ export type BrickComponentData_WireGraph_Exec_Gamemode_BroadcastStatusMessage =
     bFlashIfUnchanged: boolean;
   };
 
+export type BrickComponentData_WireGraph_Exec_Gamemode_FillArrayFromPlayers = {
+  bIncludeBuilderMode: boolean;
+};
+
 export type BrickComponentData_WireGraph_Exec_Gamemode_FillArrayFromTeamMembers =
   {};
 
@@ -2611,7 +2615,7 @@ export type ComponentTypeDataMap = {
   BrickComponentType_WireGraph_Exec_Entity_Teleport: BrickComponentData_WireGraph_Exec_Entity_Teleport;
   BrickComponentType_WireGraph_Exec_Gamemode_BroadcastChatMessage: BrickComponentData_WireGraph_Exec_Gamemode_BroadcastChatMessage;
   BrickComponentType_WireGraph_Exec_Gamemode_BroadcastStatusMessage: BrickComponentData_WireGraph_Exec_Gamemode_BroadcastStatusMessage;
-  BrickComponentType_WireGraph_Exec_Gamemode_FillArrayFromPlayers: BrickComponentData_WireGraph_Exec_ArrayVar_Base;
+  BrickComponentType_WireGraph_Exec_Gamemode_FillArrayFromPlayers: BrickComponentData_WireGraph_Exec_Gamemode_FillArrayFromPlayers;
   BrickComponentType_WireGraph_Exec_Gamemode_FillArrayFromTeamMembers: BrickComponentData_WireGraph_Exec_Gamemode_FillArrayFromTeamMembers;
   BrickComponentType_WireGraph_Exec_Gamemode_GetCurrentRound: BrickComponentData_WireGraph_Exec_Gamemode_GetCurrentRound;
   BrickComponentType_WireGraph_Exec_Gamemode_GetLeaderboardValue: BrickComponentData_WireGraph_Exec_Gamemode_GetLeaderboardValue;

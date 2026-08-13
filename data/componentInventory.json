@@ -2034,7 +2034,8 @@
       ],
       "inputs": [
         "ArrayVarRef",
-        "Exec"
+        "Exec",
+        "bIncludeBuilderMode"
       ],
       "outputs": [
         "ExecOut"
@@ -2426,18 +2427,10 @@
         "Angle",
         "Exec",
         "FontColor",
-        "FontColor.A",
-        "FontColor.B",
-        "FontColor.G",
-        "FontColor.R",
         "LetterSpacing",
         "Lifetime",
         "LineHeight",
         "OutlineColor",
-        "OutlineColor.A",
-        "OutlineColor.B",
-        "OutlineColor.G",
-        "OutlineColor.R",
         "OutlineSize",
         "Pivot",
         "Pivot.X",
@@ -2450,10 +2443,6 @@
         "Scale.X",
         "Scale.Y",
         "ShadowColor",
-        "ShadowColor.A",
-        "ShadowColor.B",
-        "ShadowColor.G",
-        "ShadowColor.R",
         "ShadowOffset",
         "ShadowOffset.X",
         "ShadowOffset.Y",
@@ -3103,15 +3092,7 @@
       "inputs": [
         "Alpha",
         "ColorA",
-        "ColorA.A",
-        "ColorA.B",
-        "ColorA.G",
-        "ColorA.R",
-        "ColorB",
-        "ColorB.A",
-        "ColorB.B",
-        "ColorB.G",
-        "ColorB.R"
+        "ColorB"
       ],
       "outputs": [
         "Output"
@@ -3123,11 +3104,7 @@
         "B_1x1_Gate_Expr_ColorConvert"
       ],
       "inputs": [
-        "Input",
-        "Input.A",
-        "Input.B",
-        "Input.G",
-        "Input.R"
+        "Input"
       ],
       "outputs": [
         "Output"
@@ -3139,11 +3116,7 @@
         "B_1x1_Gate_Expr_ColorToHex"
       ],
       "inputs": [
-        "Input",
-        "Input.A",
-        "Input.B",
-        "Input.G",
-        "Input.R"
+        "Input"
       ],
       "outputs": [
         "Hex"
@@ -4170,11 +4143,7 @@
         "B_1x1_Gate_Expr_SplitColor"
       ],
       "inputs": [
-        "Input",
-        "Input.A",
-        "Input.B",
-        "Input.G",
-        "Input.R"
+        "Input"
       ],
       "outputs": [
         "A",
@@ -4189,11 +4158,7 @@
         "B_1x1_Gate_Expr_SplitColorSRGB"
       ],
       "inputs": [
-        "Input",
-        "Input.A",
-        "Input.B",
-        "Input.G",
-        "Input.R"
+        "Input"
       ],
       "outputs": [
         "A",

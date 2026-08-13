@@ -998,6 +998,9 @@ export const SCHEMAS: Record<EmbeddedSchemaName, SchemaSource> = {
         Message: 'str',
         bFlashIfUnchanged: 'bool',
       },
+      BrickComponentData_WireGraph_Exec_Gamemode_FillArrayFromPlayers: {
+        bIncludeBuilderMode: 'bool',
+      },
       BrickComponentData_WireGraph_Exec_Gamemode_FillArrayFromTeamMembers: {},
       BrickComponentData_WireGraph_Exec_Gamemode_GetCurrentRound: {},
       BrickComponentData_WireGraph_Exec_Gamemode_GetLeaderboardValue: {
