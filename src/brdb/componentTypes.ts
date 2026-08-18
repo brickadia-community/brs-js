@@ -508,6 +508,8 @@ export type BrickComponentData_WireGraph_Exec_Gamemode_TeamLeaderboardValue = {
 
 export type BrickComponentData_WireGraph_Exec_Gamemode_TeamWins = {};
 
+export type BrickComponentData_WireGraph_Exec_GetInputs = {};
+
 export type BrickComponentData_WireGraph_Exec_GetOwnTransform = {};
 
 export type BrickComponentData_WireGraph_Exec_MapVar_ArrayDest = {};
@@ -2631,6 +2633,7 @@ export type ComponentTypeDataMap = {
   BrickComponentType_WireGraph_Exec_Gamemode_SetTeamLeaderboardValue: BrickComponentData_WireGraph_Exec_Gamemode_TeamLeaderboardValue;
   BrickComponentType_WireGraph_Exec_Gamemode_SetTeamPinned: BrickComponentData_WireGraph_Exec_Gamemode_SetTeamPinned;
   BrickComponentType_WireGraph_Exec_Gamemode_TeamWins: BrickComponentData_WireGraph_Exec_Gamemode_TeamWins;
+  BrickComponentType_WireGraph_Exec_GetInputs: BrickComponentData_WireGraph_Exec_GetInputs;
   BrickComponentType_WireGraph_Exec_GetOwnTransform: BrickComponentData_WireGraph_Exec_GetOwnTransform;
   BrickComponentType_WireGraph_Exec_MapVar_Clear: BrickComponentData_WireGraph_Exec_MapVar_Base;
   BrickComponentType_WireGraph_Exec_MapVar_CopyFrom: BrickComponentData_WireGraph_Exec_MapVar_CopyFrom;

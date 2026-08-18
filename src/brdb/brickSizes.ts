@@ -117,6 +117,7 @@ export const BRICK_HALF_EXTENTS: ReadonlyMap<
   ["B_1x1_Gate_Exec_Gamemode_SetTeamLeaderboardValue", [5, 5, 2]],
   ["B_1x1_Gate_Exec_Gamemode_SetTeamPinned", [5, 5, 2]],
   ["B_1x1_Gate_Exec_Gamemode_TeamWins", [5, 5, 2]],
+  ["B_1x1_Gate_Exec_GetInputs", [5, 5, 2]],
   ["B_1x1_Gate_Exec_GetOwnTransform", [5, 5, 2]],
   ["B_1x1_Gate_Exec_MapVar_Clear", [5, 5, 2]],
   ["B_1x1_Gate_Exec_MapVar_CopyFrom", [5, 5, 2]],

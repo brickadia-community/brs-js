@@ -110,6 +110,7 @@
     "B_1x1_Gate_Exec_Gamemode_SetTeamLeaderboardValue",
     "B_1x1_Gate_Exec_Gamemode_SetTeamPinned",
     "B_1x1_Gate_Exec_Gamemode_TeamWins",
+    "B_1x1_Gate_Exec_GetInputs",
     "B_1x1_Gate_Exec_GetOwnTransform",
     "B_1x1_Gate_Exec_MapVar_Clear",
     "B_1x1_Gate_Exec_MapVar_CopyFrom",
@@ -2254,6 +2255,31 @@
       ],
       "outputs": [
         "ExecOut"
+      ]
+    },
+    {
+      "class": "BrickComponentType_WireGraph_Exec_GetInputs",
+      "bricks": [
+        "B_1x1_Gate_Exec_GetInputs"
+      ],
+      "inputs": [
+        "Exec",
+        "Player"
+      ],
+      "outputs": [
+        "ExecOut",
+        "InputForward",
+        "InputMouseWheel",
+        "InputPitch",
+        "InputRight",
+        "InputRoll",
+        "InputUp",
+        "InputYaw",
+        "bPressedC",
+        "bPressedE",
+        "bPressedLeftMouse",
+        "bPressedQ",
+        "bPressedRightMouse"
       ]
     },
     {

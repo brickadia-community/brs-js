@@ -256,6 +256,7 @@ export const BASIC_BRICK_ASSETS: readonly string[] = [
   'B_1x1_Gate_Exec_Gamemode_SetTeamLeaderboardValue',
   'B_1x1_Gate_Exec_Gamemode_SetTeamPinned',
   'B_1x1_Gate_Exec_Gamemode_TeamWins',
+  'B_1x1_Gate_Exec_GetInputs',
   'B_1x1_Gate_Exec_GetOwnTransform',
   'B_1x1_Gate_Exec_MapVar_Clear',
   'B_1x1_Gate_Exec_MapVar_CopyFrom',
@@ -716,6 +717,7 @@ export const BRICK_ASSETS = {
   B_1x1_Gate_Exec_Gamemode_SetTeamPinned:
     'B_1x1_Gate_Exec_Gamemode_SetTeamPinned',
   B_1x1_Gate_Exec_Gamemode_TeamWins: 'B_1x1_Gate_Exec_Gamemode_TeamWins',
+  B_1x1_Gate_Exec_GetInputs: 'B_1x1_Gate_Exec_GetInputs',
   B_1x1_Gate_Exec_GetOwnTransform: 'B_1x1_Gate_Exec_GetOwnTransform',
   B_1x1_Gate_Exec_MapVar_Clear: 'B_1x1_Gate_Exec_MapVar_Clear',
   B_1x1_Gate_Exec_MapVar_CopyFrom: 'B_1x1_Gate_Exec_MapVar_CopyFrom',

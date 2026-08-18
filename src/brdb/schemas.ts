@@ -1032,6 +1032,7 @@ export const SCHEMAS: Record<EmbeddedSchemaName, SchemaSource> = {
         Value: 'i64',
       },
       BrickComponentData_WireGraph_Exec_Gamemode_TeamWins: {},
+      BrickComponentData_WireGraph_Exec_GetInputs: {},
       BrickComponentData_WireGraph_Exec_GetOwnTransform: {},
       BrickComponentData_WireGraph_Exec_MapVar_ArrayDest: {},
       BrickComponentData_WireGraph_Exec_MapVar_Base: {},
